@@ -1,0 +1,36 @@
+.footer-nav {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  .list-item {
+    margin-right: 70px;
+    margin-bottom: 40px;
+  }
+}
+
+.btn-link {
+  display: inline-block;
+  font-family: $font-family-montserrat;
+  font-size: 12px;
+  font-weight: 500;
+  color: $white;
+  text-decoration: none;
+  position: relative;
+  line-height: 1.2;
+  &:before {
+    position: absolute;
+    left: 0;
+    bottom: -13px;
+    width: 75%;
+    height: 5px;
+    content: '';
+    background-color: $primary;
+  }
+  &:hover {
+    &:before {
+      width: 100%;
+    }
+  }
+}

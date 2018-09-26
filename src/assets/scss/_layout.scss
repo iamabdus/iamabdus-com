@@ -1,0 +1,52 @@
+/* LAYOUT INNER */
+.layout-inner {
+  width: 100%;
+  margin: 0 auto;
+  display: flex;
+  height: 100vh;
+  @include media-breakpoint-up(md){
+    width: 768px;
+  }
+  @include media-breakpoint-up(lg){
+    width: 922px;
+  }
+  @include media-breakpoint-up(xl){
+    width: 1200px;
+  }
+
+}
+
+/* LAYOUT SIDENAV */
+.layout-sidenav {
+  position: relative;
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+.layout-sidenav::before {
+  content: " ";
+  position: absolute;
+  top: 0;
+  right: 0;
+  height: 100%;
+  width: 2000px;
+  background-color: #13151b;
+  z-index: 1;
+}
+
+/* LAYOUT CONTAINER */
+.layout-container {
+  padding-left: 25px;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+
+}
+
+/* CONTENT */
+.content {
+  display: flex;
+  align-items: stretch;
+  flex: 1 1 auto;
+  flex-direction: column;
+}

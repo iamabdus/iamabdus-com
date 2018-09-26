@@ -1,0 +1,27 @@
+/* HEADING */
+.heading {
+  .tag-line {
+    font-family: Montserrat;
+    font-size: 16px;
+    font-weight: 500;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: 2.13;
+    letter-spacing: 1.6px;
+    text-align: left;
+    text-transform: uppercase;
+    color: $primary;
+  }
+}
+.heading {
+  .h1 {
+    font-family: 'Abril Fatface', cursive;
+    font-size: 36px;
+    font-weight: normal;
+    font-style: normal;
+    line-height: 1;
+    color: $white;
+    margin-top: 0;
+    margin-bottom: 90px;
+  }
+}
