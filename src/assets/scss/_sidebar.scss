@@ -7,27 +7,16 @@
   align-items: center;
   z-index: 10;
   position: relative;
-  align-items: stretch;
-
   @include media-breakpoint-up(md){
-    width: 110px;
-    padding-left: 37px;
+    width: 85px;
   }
-  @include media-breakpoint-up(lg){
-    width: 75px;
-    padding-left: 0;
-  }
-  // @include media-breakpoint-up(xl){
-  //   width: 60px;
-  // }
 }
 
 /* LOGO */
 .logo {
-  width: 34px;
-  margin-left: 10px;
+  width: 24px;
   @include media-breakpoint-up(lg){
-    margin-right: 25px;
+    width: 34px;
   }
   .logo-path {
     fill:#fff;
@@ -40,17 +29,11 @@
   margin: 0;
   padding: 0;
   list-style: none;
-  margin-left: 25px;
   overflow: hidden;
-  position: relative;
-
-  @include media-breakpoint-up(md){
-    margin-top: 180px;
-  }
-  @include media-breakpoint-up(xl){
-    margin-top: 240px;
-  }
-
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translateY(-50%);
   .list-item {
     position: relative;
     width: 130px;
@@ -104,38 +87,43 @@
 .sidebar-social {
 
   @include media-breakpoint-up(md){
-    padding-right: 25px;
+    // padding-right: 25px;
   }
   @include media-breakpoint-up(xl){
-    padding-right: 0;
+    // padding-right: 0;
   }
 
   /* Side Social Menu */
   .sidebar-social-menu {
     margin: 0;
     padding: 0;
-    margin-bottom: 25px;
     list-style: none;
     display: flex;
     flex-direction: column;
     align-items: center;
-    visibility: hidden;
-    opacity: 0;
     .follow {
+      font-family: $font-family-montserrat;
+      color: #8F92A0;
       font-size: 9px;
+      font-weight: 500;
       padding-bottom: 13px;
       text-align: center;
-      color: $secondary;
-      font-family: $font-family-montserrat;
       text-transform: uppercase;
+
+
     }
     .list-item {
       padding-top: 10px;
       padding-bottom: 10px;
       .link-item {
         .fa {
-          color: $white;
+          color: #8F92A0;
           font-size: 16px;
+        }
+        &:hover {
+          .fa {
+            color: #FEFEFE;
+          }
         }
       }
     }
@@ -149,16 +137,16 @@
 
   /* Icons Squer Bulet */
   .icons-squer-bulet {
+    height: 41px;
     display: flex;
     flex-direction: row;
-    justify-content: center;
+    justify-content: space-around;
     align-items: center;
     cursor: pointer;
     .icon-item {
       width: 4px;
       height: 4px;
-      background-color: $white;
-      margin-right: 3px;
+      background-color: rgba($white, .3);
     }
   }
 }

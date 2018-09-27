@@ -7,35 +7,11 @@
   .list-item {
     margin-right: 70px;
     margin-bottom: 40px;
-    @include media-breakpoint-up(md){
+    &:last-child{
       margin-bottom: 0;
     }
-  }
-}
-
-.btn-link {
-  display: inline-block;
-  font-family: $font-family-montserrat;
-  font-size: 12px;
-  font-weight: 500;
-  color: $white;
-  text-decoration: none;
-  position: relative;
-  line-height: 1.2;
-  padding-bottom: 13px;
-  &:before {
-    position: absolute;
-    left: 0;
-    bottom: 0;
-    width: 70%;
-    height: 5px;
-    content: '';
-    background-color: $primary;
-    transition: width .3s ease-in-out;
-  }
-  &:hover {
-    &:before {
-      width: 100%;
+    @include media-breakpoint-up(md){
+      margin-bottom: 0;
     }
   }
 }

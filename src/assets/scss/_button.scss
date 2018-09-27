@@ -1,0 +1,33 @@
+.btn-link {
+  display: inline-block;
+  font-family: $font-family-montserrat;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 2.96;
+  letter-spacing: 2.4px;
+  color: $white;
+  text-decoration: none;
+  position: relative;
+  line-height: 1.2;
+  padding-bottom: 13px;
+  @include media-breakpoint-up(xl){
+    font-size: 14px;
+    line-height: 2.54;
+    letter-spacing: 2.8px;
+  }
+  &:before {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 70%;
+    height: 5px;
+    content: '';
+    background-color: $primary;
+    transition: width .3s ease-in-out;
+  }
+  &:hover {
+    &:before {
+      width: 100%;
+    }
+  }
+}
