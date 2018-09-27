@@ -21,7 +21,12 @@
     font-style: normal;
     line-height: 1;
     color: $white;
-    margin-top: 0;
-    margin-bottom: 90px;
+    margin: 0;
+    @include media-breakpoint-up(md){
+      font-size: 60px;
+    }
+    @include media-breakpoint-up(xl){
+      font-size: 105px;
+    }
   }
 }

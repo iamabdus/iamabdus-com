@@ -7,6 +7,9 @@
   .list-item {
     margin-right: 70px;
     margin-bottom: 40px;
+    @include media-breakpoint-up(md){
+      margin-bottom: 0;
+    }
   }
 }
 
@@ -19,14 +22,16 @@
   text-decoration: none;
   position: relative;
   line-height: 1.2;
+  padding-bottom: 13px;
   &:before {
     position: absolute;
     left: 0;
-    bottom: -13px;
-    width: 75%;
+    bottom: 0;
+    width: 70%;
     height: 5px;
     content: '';
     background-color: $primary;
+    transition: width .3s ease-in-out;
   }
   &:hover {
     &:before {

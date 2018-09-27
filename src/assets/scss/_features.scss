@@ -1,5 +1,9 @@
 /* FEATURES */
 .home-features {
+  padding-top: 135px;
+  @include media-breakpoint-up(xl){
+    padding-top: 166px;
+  }
   p {
     font-size: 14px;
     font-weight: 500;
