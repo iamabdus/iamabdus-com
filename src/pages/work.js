@@ -5,9 +5,9 @@ import { Link } from 'gatsby'
 import Layout from '../components/layout'
 
 
-const IndexPage = (props) => (
+const WorkPage = (props) => (
   <Layout {...props}>
-    <h1>I AM ABDUS</h1>
+    <h1>Work Page</h1>
     <p>Now go build something great.</p>
     <Link to="/">Home</Link>
     <Link to="/work">Work</Link>
@@ -16,4 +16,4 @@ const IndexPage = (props) => (
   </Layout>
 )
 
-export default IndexPage
+export default WorkPage

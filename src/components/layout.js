@@ -6,7 +6,6 @@ import { StaticQuery, graphql } from 'gatsby'
 import media from './utility/media'
 import baseStyles from './utility/basestyle'
 
-import Header from './header'
 import Sidebar from './sidebar'
 
 const Overlay = styled.div`
@@ -36,7 +35,54 @@ const LayoutInner = styled.div`
   }
 `
 
-const Layout = ({ children }) => (
+//Bas estyling for SidebarContainer and LayoutContainer
+const LayoutContainerBase = styled.div`
+  padding-top: 20px;
+  padding-bottom: 40px;
+  @media (min-width: ${media.md}) {
+    padding-top: 100px;
+    padding-bottom: 100px;
+  }
+  @media (min-width: ${media.md}) {
+    padding-top: 120px;
+    padding-bottom: 120px;
+  }
+`
+
+const LayoutSidenav = styled(LayoutContainerBase)`
+  position: relative;
+  position: fixed;
+  min-height: 100%;
+  display: flex;
+  ::before {
+    content: ' ';
+    position: absolute;
+    top: 0;
+    right: 0;
+    height: 100%;
+    width: 2000px;
+    background-color: #13151b;
+    z-index: 1;
+  }
+`
+
+const LayoutContainer = styled(LayoutContainerBase)`
+  padding-left: 85px;
+  display: flex;
+  flex-direction: column;
+  @media (min-width: ${media.md}) {
+    padding-left: 180px;
+  }
+`
+
+const Content = styled.div`
+  display: flex;
+  align-items: stretch;
+  flex: 1 1 auto;
+  flex-direction: column;
+`
+
+const Layout = props => (
   <StaticQuery
     query={graphql`
       query SiteTitleQuery {
@@ -58,7 +104,7 @@ const Layout = ({ children }) => (
               content:
                 'iamabdus, wordpress, design, sketch, photoshop, illustrator, adobe xd',
             },
-          ]}
+          ]}  
         >
           <html lang="en" />
         </Helmet>
@@ -66,18 +112,12 @@ const Layout = ({ children }) => (
         <div className="layout-wrapper">
           <Overlay />
           <LayoutInner>
-            <Sidebar />
-            <Header siteTitle={data.site.siteMetadata.title} />
-            <div
-              style={{
-                margin: '0 auto',
-                maxWidth: 960,
-                padding: '0px 1.0875rem 1.45rem',
-                paddingTop: 0,
-              }}
-            >
-              {children}
-            </div>
+            <LayoutSidenav>
+              <Sidebar {...props} />
+            </LayoutSidenav>
+            <LayoutContainer>
+              <Content>{props.children}</Content>
+            </LayoutContainer>
           </LayoutInner>
         </div>
       </>
