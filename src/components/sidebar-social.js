@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import { Link } from 'gatsby'
+import media from './utility/media'
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {
@@ -11,6 +11,8 @@ import {
 } from '@fortawesome/free-brands-svg-icons'
 
 /* Side Social Menu */
+const StyledSidebarSocial = styled.div``
+
 const SidebaSocialMenu = styled.ul`
   margin: 0;
   padding: 0;
@@ -18,6 +20,14 @@ const SidebaSocialMenu = styled.ul`
   display: flex;
   flex-direction: column;
   align-items: center;
+  visibility: hidden;
+  opacity: 0;
+  transition: opacity 250ms linear 250ms;
+
+  ${StyledSidebarSocial}:hover & {
+    visibility: visible;
+    opacity: 1;
+  }
 `
 
 const Follow = styled.span`
@@ -27,6 +37,9 @@ const Follow = styled.span`
   padding-bottom: 13px;
   text-align: center;
   text-transform: uppercase;
+  @media (max-width: ${media.md}) {
+    display: none;
+  }
 `
 
 const ListItem = styled.li`
@@ -56,11 +69,11 @@ const IconsSquareBulet = styled.div`
 const IconItem = styled.div`
   width: 4px;
   height: 4px;
-  background-color: rgba(255,255,255, 0.3);
+  background-color: rgba(255, 255, 255, 0.3);
 `
 
 const SidebarSocial = props => (
-  <div className="sidebar-social">
+  <StyledSidebarSocial>
     <SidebaSocialMenu>
       <Follow>Follow</Follow>
 
@@ -91,7 +104,7 @@ const SidebarSocial = props => (
       <IconItem />
       <IconItem />
     </IconsSquareBulet>
-  </div>
+  </StyledSidebarSocial>
 )
 
 export default SidebarSocial

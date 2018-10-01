@@ -6,16 +6,19 @@ import { Link } from 'gatsby'
 import { Location } from '@reach/router'
 
 const StyledSideMenu = styled.ul`
+  width: 50px;
   margin: 0;
-  padding: 0;
+  margin-left: 0px;
+  padding-left: 24px;
   list-style: none;
   overflow: hidden;
   position: absolute;
   top: 50%;
   left: 50%;
-  transform: translateY(-50%);
+  transform: translate(-50%, -50%);
   @media (min-width: ${media.md}) {
-    width: 85px;
+    width: 80px;
+    padding-left: 40px;
   }
   &:hover {
     overflow: visible;
@@ -50,10 +53,11 @@ const LinkItem = styled(Link)`
   text-transform: uppercase;
   padding-left: 18px;
   display: block;
-  padding-top: 8px;
-  padding-bottom: 8px;
+  padding-top: 10px;
+  padding-bottom: 10px;
   visibility: hidden;
   opacity: 0;
+  transition: opacity 250ms linear 250ms;
 
   ${StyledSideMenu}:hover & {
     visibility: visible;
@@ -70,11 +74,15 @@ const SideMenu = props => {
             <BarItem />
             <LinkItem to="/">about me</LinkItem>
           </ListItem>
-          <ListItem className={location.pathname === '/portfolio/' ? 'active' : null}>
+          <ListItem
+            className={location.pathname === '/portfolio/' ? 'active' : null}
+          >
             <BarItem />
             <LinkItem to="/portfolio/">portfolio</LinkItem>
           </ListItem>
-          <ListItem className={location.pathname === '/blog/' ? 'active' : null}>
+          <ListItem
+            className={location.pathname === '/blog/' ? 'active' : null}
+          >
             <BarItem />
             <LinkItem to="/blog/">blog</LinkItem>
           </ListItem>

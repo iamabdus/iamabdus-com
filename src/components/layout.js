@@ -75,13 +75,6 @@ const LayoutContainer = styled(LayoutContainerBase)`
   }
 `
 
-const Content = styled.div`
-  display: flex;
-  align-items: stretch;
-  flex: 1 1 auto;
-  flex-direction: column;
-`
-
 const Layout = ({ children }) => (
   <StaticQuery
     query={graphql`
@@ -107,6 +100,10 @@ const Layout = ({ children }) => (
           ]}
         >
           <html lang="en" />
+          <link
+            href="https://fonts.googleapis.com/css?family=Abril+Fatface|Montserrat:400,500"
+            rel="stylesheet"
+          />
           <style type="text/css">{`
               html,body {
                   background-color: ${theme.bodyBg};
@@ -122,9 +119,7 @@ const Layout = ({ children }) => (
             <LayoutSidenav>
               <Sidebar />
             </LayoutSidenav>
-            <LayoutContainer>
-              <Content>{children}</Content>
-            </LayoutContainer>
+            <LayoutContainer>{children}</LayoutContainer>
           </LayoutInner>
         </div>
       </>
