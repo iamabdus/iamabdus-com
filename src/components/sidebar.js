@@ -20,7 +20,7 @@ const StyledSidebar = styled.div`
 const Sidebar = props => (
   <StyledSidebar>
     <Logo />
-    <SideMenu {...props} />
+    <SideMenu />
   </StyledSidebar>
 )
 

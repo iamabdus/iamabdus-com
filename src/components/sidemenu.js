@@ -3,6 +3,7 @@ import styled from 'styled-components'
 import theme from './utility/theme'
 import media from './utility/media'
 import { Link } from 'gatsby'
+import { Location } from '@reach/router'
 
 const StyledSideMenu = styled.ul`
   margin: 0;
@@ -60,26 +61,32 @@ const LinkItem = styled(Link)`
   }
 `
 
-const SideMenu = ({ location }) => {
+const SideMenu = props => {
   return (
-    <StyledSideMenu>
-      <ListItem className={location.pathname === '/' ? 'active' : null}>
-        <BarItem />
-        <LinkItem to="/">about me</LinkItem>
-      </ListItem>
-      <ListItem className={location.pathname === '/work' ? 'active' : null}>
-        <BarItem />
-        <LinkItem to="/work">my work</LinkItem>
-      </ListItem>
-      <ListItem className={location.pathname === '/blog' ? 'active' : null}>
-        <BarItem />
-        <LinkItem to="/blog">read me</LinkItem>
-      </ListItem>
-      <ListItem className={location.pathname === '/contact' ? 'active' : null}>
-        <BarItem />
-        <LinkItem to="/contact">contact me</LinkItem>
-      </ListItem>
-    </StyledSideMenu>
+    <Location>
+      {({ location }) => (
+        <StyledSideMenu>
+          <ListItem className={location.pathname === '/' ? 'active' : null}>
+            <BarItem />
+            <LinkItem to="/">about me</LinkItem>
+          </ListItem>
+          <ListItem className={location.pathname === '/portfolio' ? 'active' : null}>
+            <BarItem />
+            <LinkItem to="/portfolio">portfolio</LinkItem>
+          </ListItem>
+          <ListItem className={location.pathname === '/blog' ? 'active' : null}>
+            <BarItem />
+            <LinkItem to="/blog">blog</LinkItem>
+          </ListItem>
+          <ListItem
+            className={location.pathname === '/contact' ? 'active' : null}
+          >
+            <BarItem />
+            <LinkItem to="/contact">contact</LinkItem>
+          </ListItem>
+        </StyledSideMenu>
+      )}
+    </Location>
   )
 }
 

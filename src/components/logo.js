@@ -2,7 +2,7 @@ import React from 'react'
 import { Link } from 'gatsby'
 import styled from 'styled-components'
 import media from './utility/media'
-import LogoSvg from '../images/logoSvg';
+import LogoSvg from '../images/logoSvg'
 
 const StyledLogo = styled.div`
   width: 24px;
@@ -10,10 +10,12 @@ const StyledLogo = styled.div`
     width: 34px;
   }
 `
-const Logo = () => <StyledLogo>
+const Logo = () => (
+  <StyledLogo>
     <Link to="/">
-        <LogoSvg/>
+      <LogoSvg />
     </Link>
-</StyledLogo>
+  </StyledLogo>
+)
 
 export default Logo

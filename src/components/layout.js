@@ -4,6 +4,7 @@ import Helmet from 'react-helmet'
 import styled from 'styled-components'
 import { StaticQuery, graphql } from 'gatsby'
 import media from './utility/media'
+import theme from './utility/theme'
 import baseStyles from './utility/basestyle'
 
 import Sidebar from './sidebar'
@@ -82,7 +83,7 @@ const Content = styled.div`
   flex-direction: column;
 `
 
-const Layout = props => (
+const Layout = ({ children }) => (
   <StaticQuery
     query={graphql`
       query SiteTitleQuery {
@@ -104,19 +105,26 @@ const Layout = props => (
               content:
                 'iamabdus, wordpress, design, sketch, photoshop, illustrator, adobe xd',
             },
-          ]}  
+          ]}
         >
           <html lang="en" />
+          <style type="text/css">{`
+              html,body {
+                  background-color: ${theme.bodyBg};
+                  margin: 0;
+                  padding: 0
+              }
+          `}</style>
         </Helmet>
         {baseStyles()}
         <div className="layout-wrapper">
           <Overlay />
           <LayoutInner>
             <LayoutSidenav>
-              <Sidebar {...props} />
+              <Sidebar />
             </LayoutSidenav>
             <LayoutContainer>
-              <Content>{props.children}</Content>
+              <Content>{children}</Content>
             </LayoutContainer>
           </LayoutInner>
         </div>
