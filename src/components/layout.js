@@ -6,7 +6,6 @@ import { StaticQuery, graphql } from 'gatsby'
 import media from './utility/media'
 import theme from './utility/theme'
 import baseStyles from './utility/basestyle'
-
 import Sidebar from './sidebar'
 
 const Overlay = styled.div`

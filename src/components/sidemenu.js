@@ -70,19 +70,19 @@ const SideMenu = props => {
             <BarItem />
             <LinkItem to="/">about me</LinkItem>
           </ListItem>
-          <ListItem className={location.pathname === '/portfolio' ? 'active' : null}>
+          <ListItem className={location.pathname === '/portfolio/' ? 'active' : null}>
             <BarItem />
-            <LinkItem to="/portfolio">portfolio</LinkItem>
+            <LinkItem to="/portfolio/">portfolio</LinkItem>
           </ListItem>
-          <ListItem className={location.pathname === '/blog' ? 'active' : null}>
+          <ListItem className={location.pathname === '/blog/' ? 'active' : null}>
             <BarItem />
-            <LinkItem to="/blog">blog</LinkItem>
+            <LinkItem to="/blog/">blog</LinkItem>
           </ListItem>
           <ListItem
-            className={location.pathname === '/contact' ? 'active' : null}
+            className={location.pathname === '/contact/' ? 'active' : null}
           >
             <BarItem />
-            <LinkItem to="/contact">contact</LinkItem>
+            <LinkItem to="/contact/">contact</LinkItem>
           </ListItem>
         </StyledSideMenu>
       )}
