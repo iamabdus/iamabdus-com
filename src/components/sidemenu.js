@@ -37,7 +37,7 @@ const BarItem = styled.span`
   display: inline-block;
   width: 2px;
   height: 25px;
-  background-color: #707070;
+  background-color: ${theme.secondary};
   ${ListItem}.active & {
     background-color: ${theme.primary};
   }

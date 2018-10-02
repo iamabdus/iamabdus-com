@@ -1,8 +1,9 @@
-import React from 'react'
+import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import Helmet from 'react-helmet'
 import styled from 'styled-components'
 import { StaticQuery, graphql } from 'gatsby'
+import posed from 'react-pose'
 import media from './utility/media'
 import theme from './utility/theme'
 import baseStyles from './utility/basestyle'
@@ -49,7 +50,19 @@ const LayoutContainerBase = styled.div`
   }
 `
 
-const LayoutSidenav = styled(LayoutContainerBase)`
+
+const PosedLayoutSidenav = posed(LayoutContainerBase)({
+  closed: { x: '-115vw' },
+  open: {
+    x: 0,
+    transition: {
+      duration: 500,
+      ease: 'easeOut',
+    },
+  },
+})
+
+const LayoutSidenav = styled(PosedLayoutSidenav)`
   position: relative;
   position: fixed;
   min-height: 100%;
@@ -75,57 +88,97 @@ const LayoutContainer = styled(LayoutContainerBase)`
   }
 `
 
-const Layout = ({ children }) => (
-  <StaticQuery
-    query={graphql`
-      query SiteTitleQuery {
-        site {
-          siteMetadata {
-            title
-          }
-        }
+class Layout extends Component {
+  constructor() {
+    super()
+
+    if (!window.isVisited) {
+      this.state = {
+        openSidebar: false,
+        visitedFirst: true,
       }
-    `}
-    render={data => (
-      <>
-        <Helmet
-          title={data.site.siteMetadata.title}
-          meta={[
-            { name: 'description', content: 'I am Abdus Salam' },
-            {
-              name: 'keywords',
-              content:
-                'iamabdus, wordpress, design, sketch, photoshop, illustrator, adobe xd',
-            },
-          ]}
-        >
-          <html lang="en" />
-          <link
-            href="https://fonts.googleapis.com/css?family=Abril+Fatface|Montserrat:400,500"
-            rel="stylesheet"
-          />
-          <style type="text/css">{`
-              html,body {
-                  background-color: ${theme.bodyBg};
-                  margin: 0;
-                  padding: 0
+      //Set global variable checker isVisited
+      window.isVisited = true
+    } else {
+      this.state = {
+        openSidebar: false,
+      }
+    }
+  }
+
+  componentDidMount() {
+    this.openSidebar = setTimeout(() => {
+      this.setState({ openSidebar: !this.state.openSidebar })
+    }, 100)
+  }
+
+  componentWillUnmount() {
+    clearTimeout(this.openSidebar)
+  }
+
+  render() {
+    const { children } = this.props
+    return (
+      <StaticQuery
+        query={graphql`
+          query SiteTitleQuery {
+            site {
+              siteMetadata {
+                title
               }
-          `}</style>
-        </Helmet>
-        {baseStyles()}
-        <div className="layout-wrapper">
-          <Overlay />
-          <LayoutInner>
-            <LayoutSidenav>
-              <Sidebar />
-            </LayoutSidenav>
-            <LayoutContainer>{children}</LayoutContainer>
-          </LayoutInner>
-        </div>
-      </>
-    )}
-  />
-)
+            }
+          }
+        `}
+        render={data => (
+          <>
+            <Helmet
+              title={data.site.siteMetadata.title}
+              meta={[
+                { name: 'description', content: 'I am Abdus Salam' },
+                {
+                  name: 'keywords',
+                  content:
+                    'iamabdus, wordpress, design, sketch, photoshop, illustrator, adobe xd',
+                },
+              ]}
+            >
+              <html lang="en" />
+              <link
+                href="https://fonts.googleapis.com/css?family=Abril+Fatface|Montserrat:400,500"
+                rel="stylesheet"
+              />
+              <style type="text/css">{`
+                  html,body {
+                      background-color: ${theme.bodyBg};
+                      margin: 0;
+                      padding: 0
+                  }
+              `}</style>
+            </Helmet>
+            {baseStyles()}
+            <div className="layout-wrapper">
+              <Overlay />
+              <LayoutInner>
+                {this.state.visitedFirst ? (
+                  <LayoutSidenav
+                    pose={this.state.openSidebar ? 'open' : 'closed'}
+                  >
+                    <Sidebar visitedFirst/>
+                  </LayoutSidenav>
+                ) : (
+                  <LayoutSidenav pose="open">
+                    <Sidebar/>
+                  </LayoutSidenav>
+                )}
+                <LayoutContainer>{children}</LayoutContainer>
+              </LayoutInner>
+            </div>
+          </>
+        )}
+      />
+    )
+  }
+}
 
 Layout.propTypes = {
   children: PropTypes.node.isRequired,
