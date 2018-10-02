@@ -17,14 +17,15 @@
   }
 }
 .heading {
-  .h1 {
+  .h1, .h2 {
     font-family: 'Abril Fatface', cursive;
     font-size: 36px;
     font-weight: normal;
     font-style: normal;
-    line-height: 1;
     color: $white;
     margin: 0;
+  }
+  .h1 {
     line-height: 1.83;
     letter-spacing: 3.6px;
     @include media-breakpoint-up(md){
@@ -33,9 +34,15 @@
     }
     @include media-breakpoint-up(xl){
       font-size: 105px;
-      font-size: 105px;
       line-height: 1.04;
       letter-spacing: 10.5px;
+    }
+  }
+  .h2 {
+    @include media-breakpoint-up(xl){
+      font-size: 48px;
+      line-height: 1.04;
+      letter-spacing: 6px;
     }
   }
 }
