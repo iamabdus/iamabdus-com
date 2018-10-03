@@ -32,7 +32,7 @@ const Blog = props => (
   <Layout>
     <div className="heading">
       <Tagline>blog</Tagline>
-      <Title>Latest Article</Title>
+      <Title>Blog</Title>
     </div>
   </Layout>
 )

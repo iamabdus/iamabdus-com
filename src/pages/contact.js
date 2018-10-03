@@ -32,7 +32,7 @@ const Contact = props => (
   <Layout>
     <div className="heading">
       <Tagline>contact</Tagline>
-      <Title>You are Curious</Title>
+      <Title>Contact</Title>
     </div>
   </Layout>
 )

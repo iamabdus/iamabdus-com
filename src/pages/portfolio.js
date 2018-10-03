@@ -32,7 +32,7 @@ const Portfolio = props => (
   <Layout>
     <div className="heading">
       <Tagline>portfolio</Tagline>
-      <Title>My Works</Title>
+      <Title>Portfolio</Title>
     </div>
   </Layout>
 )

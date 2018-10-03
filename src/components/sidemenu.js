@@ -59,6 +59,17 @@ const LinkItem = styled(Link)`
   opacity: 0;
   transition: opacity 250ms linear 250ms;
 
+  &::before {
+    content: '';
+    position: absolute;
+    left: -15%;
+    top: 50%;
+    width: 100%;
+    transform: translateY(-50%);
+    display: inline-block;
+    height: 25px;
+  }
+
   ${StyledSideMenu}:hover & {
     visibility: visible;
     opacity: 1;
