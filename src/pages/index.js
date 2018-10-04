@@ -1,11 +1,13 @@
-import React from 'react'
+import React, { Component } from 'react'
 import styled from 'styled-components'
 import { Link } from 'gatsby'
+import posed, { PoseGroup } from 'react-pose'
 import media from '../components/utility/media'
 import theme from '../components/utility/theme'
 import Layout from '../components/layout'
-import Tagline from '../components/Tagline'
-import Text from '../components/Text'
+import Tagline from '../components/tagline'
+import Title from '../components/title'
+import Text from '../components/text'
 
 const Content = styled.div`
   display: flex;
@@ -14,28 +16,6 @@ const Content = styled.div`
   flex-direction: column;
 `
 
-const Title = styled.h1`
-  font-family: 'Abril Fatface', cursive;
-    font-size: 36px;
-    font-weight: normal;
-    font-style: normal;
-    line-height: 1;
-    color: #ffffff;
-    margin: 0;
-    line-height: 1.83;
-    letter-spacing: 3.6px;
-    @media(min-width: ${media.md}){
-      font-size: 60px;
-      letter-spacing: 6px;
-    }
-    @media(min-width: ${media.xl}){
-      font-size: 105px;
-      font-size: 105px;
-      line-height: 1.04;
-      letter-spacing: 10.5px;
-    }
-  }
-`
 
 const Features = styled.div`
   padding-top: 110px;
@@ -43,6 +23,24 @@ const Features = styled.div`
     padding-top: 166px;
   }
 `
+
+const PosedFooter = posed.div({
+  enter: {
+    x: 0,
+    opacity: 1,
+    transition: {
+      delay: 700,
+    },
+  },
+  exit: {
+    x: -50,
+    opacity: 0,
+    transition: {
+      duration: 300,
+    },
+  },
+})
+
 const FooterNav = styled.ul`
   margin: 0;
   padding: 0;
@@ -98,37 +96,62 @@ const NavLink = styled(Link)`
 
 `
 
-const IndexPage = props => (
-  <Layout>
-    <Content>
-      <div className="heading">
-        <Tagline>i am abdus</Tagline>
-        <Title>UI Designer</Title>
-      </div>
+class IndexPage extends Component {
+  constructor() {
+    super()
 
-      <Features>
-        <Text>Father of two boys</Text>
-        <Text>Husband of a talent lady</Text>
-        <Text>Founder of TAF Technology</Text>
-        <Text>Promoting FreeCodeCamp Rajshahi</Text>
-        <Text>Learning new technologies everyday</Text>
-      </Features>
-    </Content>
+    this.state = {
+      isVisible: false,
+    }
+  }
 
-    <div className="footer">
-      <FooterNav>
-        <NavItem>
-          <NavLink to="/portfolio/">Portfolio</NavLink>
-        </NavItem>
-        <NavItem>
-          <NavLink to="/blog/">My Blog</NavLink>
-        </NavItem>
-        <NavItem>
-          <NavLink to="/contact/">Contact</NavLink>
-        </NavItem>
-      </FooterNav>
-    </div>
-  </Layout>
-)
+  componentDidMount() {
+    this.setState({ isVisible: true })
+  }
+
+  render() {
+    const { isVisible } = this.state
+    return (
+      <Layout>
+        <Content>
+          <div className="heading">
+            <PoseGroup>
+              {isVisible && [
+                <Tagline key="Tag">i am abdus</Tagline>
+              ]}
+            </PoseGroup>
+            <Title key="Title">UI Designer</Title>
+          </div>
+
+          <Features>
+            <Text>Father of two boys</Text>
+            <Text>Husband of a talent lady</Text>
+            <Text>Founder of TAF Technology</Text>
+            <Text>Promoting FreeCodeCamp Rajshahi</Text>
+            <Text>Learning new technologies everyday</Text>
+          </Features>
+        </Content>
+
+        <PoseGroup>
+          {isVisible && [
+            <PosedFooter className="footer" key="footer">
+              <FooterNav>
+                <NavItem>
+                  <NavLink to="/portfolio/">Portfolio</NavLink>
+                </NavItem>
+                <NavItem>
+                  <NavLink to="/blog/">My Blog</NavLink>
+                </NavItem>
+                <NavItem>
+                  <NavLink to="/contact/">Contact</NavLink>
+                </NavItem>
+              </FooterNav>
+            </PosedFooter>,
+          ]}
+        </PoseGroup>
+      </Layout>
+    )
+  }
+}
 
 export default IndexPage

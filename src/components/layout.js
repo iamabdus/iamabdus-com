@@ -1,9 +1,9 @@
 import React, { Component } from 'react'
-import PropTypes from 'prop-types'
 import Helmet from 'react-helmet'
 import styled from 'styled-components'
 import { StaticQuery, graphql } from 'gatsby'
 import posed from 'react-pose'
+import { GlobalContext } from '../contexts/GlobalContext'
 import media from './utility/media'
 import theme from './utility/theme'
 import baseStyles from './utility/basestyle'
@@ -49,7 +49,6 @@ const LayoutContainerBase = styled.div`
     padding-bottom: 120px;
   }
 `
-
 
 const PosedLayoutSidenav = posed(LayoutContainerBase)({
   closed: { x: '-115vw' },
@@ -151,11 +150,13 @@ class Layout extends Component {
                   html,body {
                       background-color: ${theme.bodyBg};
                       margin: 0;
-                      padding: 0
+                      padding: 0;
+                      overflow: hidden
                   }
               `}</style>
             </Helmet>
             {baseStyles()}
+
             <div className="layout-wrapper">
               <Overlay />
               <LayoutInner>
@@ -163,11 +164,11 @@ class Layout extends Component {
                   <LayoutSidenav
                     pose={this.state.openSidebar ? 'open' : 'closed'}
                   >
-                    <Sidebar visitedFirst/>
+                    <Sidebar visitedFirst />
                   </LayoutSidenav>
                 ) : (
                   <LayoutSidenav pose="open">
-                    <Sidebar/>
+                    <Sidebar />
                   </LayoutSidenav>
                 )}
                 <LayoutContainer>{children}</LayoutContainer>
@@ -180,8 +181,17 @@ class Layout extends Component {
   }
 }
 
-Layout.propTypes = {
-  children: PropTypes.node.isRequired,
+
+class LayoutWrapper extends Component {
+  render() {
+    return (
+      <GlobalContext.Consumer>
+        {({isfirstLoad}) => (
+          <Layout {...this.props} isfirstLoad={isfirstLoad}/>
+        )}
+      </GlobalContext.Consumer>
+    )
+  }
 }
 
-export default Layout
+export default LayoutWrapper

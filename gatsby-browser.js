@@ -1,7 +1,20 @@
-/**
- * Implement Gatsby's Browser APIs in this file.
- *
- * See: https://www.gatsbyjs.org/docs/browser-apis/
- */
+import React from 'react'
+import GlobalContextProvider from './src/contexts/GlobalContextProvider'
 
-// You can delete this file if you're not using it
+const onClientEntry = () => {
+  console.log("We've started!")
+}
+
+let currentLocation = "";
+
+const onPreRouteUpdate = ({ location }) => {
+    currentLocation = location.pathname;
+  }
+
+
+const wrapPageElement = ({ element, props }) => {
+  return <GlobalContextProvider {...props} location={currentLocation}>{element}</GlobalContextProvider>
+}
+
+
+export {onClientEntry, onPreRouteUpdate, wrapPageElement}

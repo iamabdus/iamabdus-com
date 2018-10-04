@@ -1,8 +1,28 @@
 import styled from 'styled-components'
 import media from '../components/utility/media'
 import theme from '../components/utility/theme'
+import posed from 'react-pose'
 
-const Tagline = styled.div`
+const PosedTag = posed.div({
+  enter: {
+    x: 0,
+    opacity: 1,
+    transition: {
+      opacity: { ease: 'easeIn', duration: 200 },
+      x: { ease: 'easeIn', duration: 300 },
+    },
+  },
+  exit: {
+    x: -25,
+    opacity: 0,
+    transition: {
+      opacity: { ease: 'easeOut', duration: 200 },
+      x: { ease: 'easeOut', duration: 300 },
+    },
+  },
+})
+
+const Tagline = styled(PosedTag)`
   font-family: ${theme.fontFamily};
   font-size: 16px;
   font-weight: 500;
@@ -17,6 +37,5 @@ const Tagline = styled.div`
     line-height: 1;
   }
 `
-
 
 export default Tagline
