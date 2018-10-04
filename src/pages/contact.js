@@ -2,7 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 // import { Link } from 'gatsby'
 import media from '../components/utility/media'
-import Layout from '../components/layout'
+import Layout from '../components/Layout'
 import Tagline from '../components/Tagline'
 
 const Title = styled.h1`

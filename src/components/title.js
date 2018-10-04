@@ -1,8 +1,7 @@
-import React, {Component} from 'react'
+import React, { Component } from 'react'
 import styled from 'styled-components'
-import media from '../components/utility/media'
+import media from './utility/media'
 import SplitText from 'react-pose-text'
-
 
 const StyledTitle = styled(SplitText)`
     font-family: 'Abril Fatface', cursive;
@@ -12,6 +11,7 @@ const StyledTitle = styled(SplitText)`
       line-height: 1;
       color: #ffffff;
       margin: 0;
+      margin-left: -5px;
       line-height: 1.83;
       letter-spacing: 3.6px;
       @media(min-width: ${media.md}){
@@ -28,18 +28,48 @@ const StyledTitle = styled(SplitText)`
   `
 
 const charPoses = {
-  first: { opacity: 0 },
+  first: {
+    opacity: 0,
+    marginLeft: ({ children }) => {
+      return /-/.test(children) ? '-10px' : '1px'
+    },
+    x: 1,
+  },
   middle: {
-    opacity: 1,
-    delay: ({ charIndex }) => charIndex * 100,
+    opacity: ({ children }) => {
+      return /-/.test(children) ? 0 : 1
+    },
+    marginLeft: ({ children }) => {
+      return /-/.test(children) ? '-10px' : '1px'
+    },
+    x: 1,
+    delay: ({ charIndex }) => charIndex * 80,
+    transition: {
+      ease: 'easeOut',
+    }
   },
 }
-const charPosesNew = {
-  middle: { opacity: 1 },
+const charPosesLater = {
+  middle: {
+    opacity: ({ children }) => {
+      return /-/.test(children) ? 0 : 1
+    },
+    marginLeft: ({ children }) => {
+      return /-/.test(children) ? '-10px' : '1px'
+    },
+    x: 1,
+  },
   last: {
     opacity: 0,
+    marginLeft: ({ children }) => {
+      return /-/.test(children) ? '-10px' : '1px'
+    },
+    x: 0,
     delay: ({ charIndex, numChars }) => {
-      return (numChars - charIndex) * 100
+      return (numChars - charIndex) * 50
+    },
+    transition: {
+      ease: 'easeOut',
     },
   },
 }
@@ -47,27 +77,61 @@ const charPosesNew = {
 class Title extends Component {
   state = {
     isFirst: true,
-    text: 'React Text',
+    text: this.props.titles[0],
     count: 1,
+    currentTitleIndex: 0,
   }
 
   FireMe = () => {
-    if (this.state.count < this.state.text.length - 1) {
+    const textLength = this.state.text.replace(/\s/g, '').length
+
+    if (this.state.count < textLength - 1) {
       this.setState(prevState => {
         return {
           count: prevState.count + 1,
         }
       })
     } else {
-      this.setState({ isFirst: false })
+      if (this.state.count === textLength - 1) {
+        //Set delay after first round animation
+        setTimeout(() => {
+          this.setState(prevState => {
+            return {
+              isFirst: false,
+            }
+          })
+        }, 3000)
+      }
+
+      this.setState(prevState => {
+        return {
+          count: prevState.count + 1,
+        }
+      })
+    }
+
+    //For new text item
+    if (this.state.count >= textLength * 2 - 1) {
+      this.setState(prevState => {
+        let newIndex =
+          (prevState.currentTitleIndex + 1) % this.props.titles.length
+
+        return {
+          currentTitleIndex: newIndex,
+          count: 1,
+          isFirst: true,
+          text: this.props.titles[newIndex],
+        }
+      })
     }
   }
+
   render() {
     return (
       <div>
         {this.state.isFirst ? (
           <StyledTitle
-            key={'splittext' + this.state.isFirst}
+            key={'splittext' + this.state.text + this.state.isFirst}
             onPoseComplete={() => this.FireMe()}
             initialPose="first"
             pose="middle"
@@ -77,10 +141,11 @@ class Title extends Component {
           </StyledTitle>
         ) : (
           <StyledTitle
-            key={'splittext' + this.state.isFirst}
+            key={'splittext' + this.state.text + this.state.isFirst}
+            onPoseComplete={() => this.FireMe()}
             initialPose="middle"
             pose="last"
-            charPoses={charPosesNew}
+            charPoses={charPosesLater}
           >
             {this.state.text}
           </StyledTitle>

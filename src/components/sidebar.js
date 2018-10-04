@@ -2,9 +2,9 @@ import React, { Component } from 'react'
 import styled from 'styled-components'
 import posed from 'react-pose'
 import media from './utility/media'
-import Logo from './logo'
-import SideMenu from './sidemenu'
-import SidebarSocial from './sidebar-social'
+import Logo from './Logo'
+import SideMenu from './Sidemenu'
+import SidebarSocial from './SidebarSocial'
 
 // const MyComponent = ({ hostRef }) => <div ref={hostRef}></div>
 

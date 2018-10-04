@@ -4,10 +4,12 @@ import { Link } from 'gatsby'
 import posed, { PoseGroup } from 'react-pose'
 import media from '../components/utility/media'
 import theme from '../components/utility/theme'
-import Layout from '../components/layout'
-import Tagline from '../components/tagline'
-import Title from '../components/title'
-import Text from '../components/text'
+import Layout from '../components/Layout'
+import Tagline from '../components/Tagline'
+import Title from '../components/Title'
+import Text from '../components/Text'
+
+const titles = ['UX-Designer', 'UI-Designer', 'Enterpreneur']
 
 const Content = styled.div`
   display: flex;
@@ -15,7 +17,6 @@ const Content = styled.div`
   flex: 1 1 auto;
   flex-direction: column;
 `
-
 
 const Features = styled.div`
   padding-top: 110px;
@@ -109,6 +110,7 @@ class IndexPage extends Component {
     this.setState({ isVisible: true })
   }
 
+
   render() {
     const { isVisible } = this.state
     return (
@@ -116,11 +118,9 @@ class IndexPage extends Component {
         <Content>
           <div className="heading">
             <PoseGroup>
-              {isVisible && [
-                <Tagline key="Tag">i am abdus</Tagline>
-              ]}
+              {isVisible && [<Tagline key="Tag">i am abdus</Tagline>]}
             </PoseGroup>
-            <Title key="Title">UI Designer</Title>
+            <Title key="Title" titles={titles} />
           </div>
 
           <Features>

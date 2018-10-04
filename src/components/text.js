@@ -1,6 +1,6 @@
 import styled from 'styled-components'
-import media from '../components/utility/media'
-import theme from '../components/utility/theme'
+import media from './utility/media'
+import theme from './utility/theme'
 
 const Text = styled.div`
   margin: 0;

@@ -7,7 +7,7 @@ import { GlobalContext } from '../contexts/GlobalContext'
 import media from './utility/media'
 import theme from './utility/theme'
 import baseStyles from './utility/basestyle'
-import Sidebar from './sidebar'
+import Sidebar from './Sidebar'
 
 const Overlay = styled.div`
   position: absolute;
