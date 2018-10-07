@@ -46,7 +46,7 @@ const charPoses = {
     delay: ({ charIndex }) => charIndex * 80,
     transition: {
       ease: 'easeOut',
-    }
+    },
   },
 }
 const charPosesLater = {
@@ -66,7 +66,7 @@ const charPosesLater = {
     },
     x: 0,
     delay: ({ charIndex, numChars }) => {
-      return (numChars - charIndex) * 50
+      return (numChars - charIndex) * 30
     },
     transition: {
       ease: 'easeOut',
@@ -77,9 +77,16 @@ const charPosesLater = {
 class Title extends Component {
   state = {
     isFirst: true,
+    show: false,
     text: this.props.titles[0],
     count: 1,
     currentTitleIndex: 0,
+  }
+
+  componentDidMount() {
+    this.timeShow = setTimeout(() => {
+      this.setState({ show: true })
+    }, this.props.customDelay)
   }
 
   FireMe = () => {
@@ -94,7 +101,7 @@ class Title extends Component {
     } else {
       if (this.state.count === textLength - 1) {
         //Set delay after first round animation
-        setTimeout(() => {
+        this.timeout = setTimeout(() => {
           this.setState(prevState => {
             return {
               isFirst: false,
@@ -126,30 +133,41 @@ class Title extends Component {
     }
   }
 
+  componentWillUnmount() {
+    clearTimeout(this.timeout)
+    clearTimeout(this.timeShow)
+  }
+
   render() {
     return (
       <div>
-        {this.state.isFirst ? (
-          <StyledTitle
-            key={'splittext' + this.state.text + this.state.isFirst}
-            onPoseComplete={() => this.FireMe()}
-            initialPose="first"
-            pose="middle"
-            charPoses={charPoses}
-          >
-            {this.state.text}
-          </StyledTitle>
-        ) : (
-          <StyledTitle
-            key={'splittext' + this.state.text + this.state.isFirst}
-            onPoseComplete={() => this.FireMe()}
-            initialPose="middle"
-            pose="last"
-            charPoses={charPosesLater}
-          >
-            {this.state.text}
-          </StyledTitle>
-        )}
+        {this.state.show ? (
+          <div>
+            {this.state.isFirst ? (
+              <StyledTitle
+                key={'splittext' + this.state.text + this.state.isFirst}
+                onPoseComplete={() => this.FireMe()}
+                initialPose="first"
+                pose="middle"
+                charPoses={charPoses}
+                withParent={false}
+              >
+                {this.state.text}
+              </StyledTitle>
+            ) : (
+              <StyledTitle
+                key={'splittext' + this.state.text + this.state.isFirst}
+                onPoseComplete={() => this.FireMe()}
+                initialPose="middle"
+                pose="last"
+                charPoses={charPosesLater}
+                withParent={false}
+              >
+                {this.state.text}
+              </StyledTitle>
+            )}
+          </div>
+        ) : null}
       </div>
     )
   }

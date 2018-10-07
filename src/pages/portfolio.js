@@ -1,7 +1,5 @@
-import React, {Component} from 'react'
+import React, { Component } from 'react'
 import styled from 'styled-components'
-// import { Link } from 'gatsby'
-import posed, { PoseGroup } from 'react-pose'
 import media from '../components/utility/media'
 import Layout from '../components/Layout'
 import Tagline from '../components/Tagline'
@@ -42,20 +40,13 @@ class Portfolio extends Component {
     this.setState({ isVisible: true })
   }
 
-
   render() {
-    const { isVisible } = this.state
     return (
       <Layout>
- 
-          <div className="heading">
-            <PoseGroup>
-              {isVisible && [<Tagline key="Tag">Portfolio</Tagline>]}
-              {isVisible && [<Tagline key="Tag1">Portfolio 2</Tagline>]}
-              {isVisible && [<Tagline key="Tag2">Portfolio 4</Tagline>]}
-            </PoseGroup>
-          </div>
-  
+        <div className="heading">
+          <Tagline key="Tag">Portfolio</Tagline>
+          <Title>Portfolio</Title>
+        </div>
       </Layout>
     )
   }

@@ -87,6 +87,18 @@ const LayoutContainer = styled(LayoutContainerBase)`
   }
 `
 
+const PosedLayoutContainer = posed(LayoutContainer)({
+  enter: {
+    opacity: 1,
+    delayChildren: 700,
+    staggerChildren: 0,
+    transition: {
+      ease: 'easeOut',
+    },
+  },
+  exit: { opacity: 0, delay: 0 },
+})
+
 class Layout extends Component {
   constructor() {
     super()
@@ -171,7 +183,9 @@ class Layout extends Component {
                     <Sidebar />
                   </LayoutSidenav>
                 )}
-                <LayoutContainer>{children}</LayoutContainer>
+                <PosedLayoutContainer isfirstLoad={this.props.isfirstLoad} initialPose="exit" pose="enter">
+                  {children}
+                </PosedLayoutContainer>
               </LayoutInner>
             </div>
           </>
@@ -181,13 +195,12 @@ class Layout extends Component {
   }
 }
 
-
 class LayoutWrapper extends Component {
   render() {
     return (
       <GlobalContext.Consumer>
-        {({isfirstLoad}) => (
-          <Layout {...this.props} isfirstLoad={isfirstLoad}/>
+        {({ isfirstLoad }) => (
+          <Layout {...this.props} isfirstLoad={isfirstLoad} />
         )}
       </GlobalContext.Consumer>
     )

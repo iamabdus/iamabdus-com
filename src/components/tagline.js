@@ -8,16 +8,16 @@ const PosedTag = posed.div({
     x: 0,
     opacity: 1,
     transition: {
-      opacity: { ease: 'easeIn', duration: 200 },
-      x: { ease: 'easeIn', duration: 300 },
+      opacity: { ease: 'easeOut', duration: 100 },
+      x: { ease: 'easeOut', duration: 300 },
     },
   },
   exit: {
     x: -25,
     opacity: 0,
     transition: {
-      opacity: { ease: 'easeOut', duration: 200 },
-      x: { ease: 'easeOut', duration: 300 },
+      opacity: { ease: 'easeIn', duration: 100 },
+      x: { ease: 'easeIn', duration: 300 },
     },
   },
 })
