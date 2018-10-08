@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { Component } from 'react'
 import styled from 'styled-components'
 import theme from './utility/theme'
 import media from './utility/media'
@@ -57,7 +57,7 @@ const LinkItem = styled(Link)`
   padding-bottom: 10px;
   visibility: hidden;
   opacity: 0;
-  transition: opacity 250ms linear 250ms;
+  transition: opacity 300ms linear 300ms;
 
   &::before {
     content: '';
@@ -76,37 +76,79 @@ const LinkItem = styled(Link)`
   }
 `
 
-const SideMenu = props => {
-  return (
-    <Location>
-      {({ location }) => (
-        <StyledSideMenu>
-          <ListItem className={location.pathname === '/' ? 'active' : null}>
-            <BarItem />
-            <LinkItem to="/">about me</LinkItem>
-          </ListItem>
-          <ListItem
-            className={location.pathname === '/portfolio/' ? 'active' : null}
-          >
-            <BarItem />
-            <LinkItem to="/portfolio/">portfolio</LinkItem>
-          </ListItem>
-          <ListItem
-            className={location.pathname === '/blog/' ? 'active' : null}
-          >
-            <BarItem />
-            <LinkItem to="/blog/">blog</LinkItem>
-          </ListItem>
-          <ListItem
-            className={location.pathname === '/contact/' ? 'active' : null}
-          >
-            <BarItem />
-            <LinkItem to="/contact/">contact</LinkItem>
-          </ListItem>
-        </StyledSideMenu>
-      )}
-    </Location>
-  )
+class SideMenu extends Component {
+  clicked = (e, nextPagePath, currentPath) => {
+    e.preventDefault()
+    if (nextPagePath === currentPath) return
+    this.props.startPageChangingHandler(nextPagePath)
+  }
+
+  render() {
+    return (
+      <Location>
+        {({ location }) => (
+          <StyledSideMenu>
+            <ListItem className={location.pathname === '/' ? 'active' : null}>
+              <BarItem />
+              <LinkItem
+                to="/"
+                onClick={(e, path = '/', currentPath = location.pathname) =>
+                  this.clicked(e, path, currentPath)
+                }
+              >
+                about me
+              </LinkItem>
+            </ListItem>
+            <ListItem
+              className={location.pathname === '/portfolio/' ? 'active' : null}
+            >
+              <BarItem />
+              <LinkItem
+                to="/portfolio/"
+                onClick={(
+                  e,
+                  path = '/portfolio/',
+                  currentPath = location.pathname
+                ) => this.clicked(e, path, currentPath)}
+              >
+                portfolio
+              </LinkItem>
+            </ListItem>
+            <ListItem
+              className={location.pathname === '/blog/' ? 'active' : null}
+            >
+              <BarItem />
+              <LinkItem
+                to="/blog/"
+                onClick={(
+                  e,
+                  path = '/blog/',
+                  currentPath = location.pathname
+                ) => this.clicked(e, path, currentPath)}
+              >
+                blog
+              </LinkItem>
+            </ListItem>
+            <ListItem
+              className={location.pathname === '/contact/' ? 'active' : null}
+            >
+              <BarItem />
+              <LinkItem
+                to="/contact/"
+                onClick={(
+                  e,
+                  path = '/contact/',
+                  currentPath = location.pathname
+                ) => this.clicked(e, path, currentPath)}
+              >
+                contact
+              </LinkItem>
+            </ListItem>
+          </StyledSideMenu>
+        )}
+      </Location>
+    )
+  }
 }
 
 export default SideMenu

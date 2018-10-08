@@ -1,21 +1,33 @@
 import React, { Component } from 'react'
 import { GlobalContext } from './GlobalContext'
 class GlobalContextProvider extends Component {
-  state = {
-    isfirstLoad: true,
+  constructor() {
+    super()
+    this.state = {
+      isfirstLoad: true,
+    }
   }
 
-  componentDidUpdate(PrevProps) {
-    if (this.props !== PrevProps) {
-      this.setState({
-        isfirstLoad: false,
-      })
-    }
+  componentDidMount() {
+    this.setState({
+      isfirstLoad: false,
+    })
+  }
+
+  shouldComponentUpdate(nextProps) {
+    const currentPath = this.props.children.props.location.pathname
+    const nextPath = nextProps.children.props.location.pathname
+    return currentPath !== nextPath
+  }
+
+  componentDidUpdate(prevProps) {
   }
 
   render() {
     return (
-      <GlobalContext.Provider value={{ isfirstLoad: this.state.isfirstLoad, props: this.props }}>
+      <GlobalContext.Provider
+        value={{ isfirstLoad: this.state.isfirstLoad, props: this.props }}
+      >
         {this.props.children}
       </GlobalContext.Provider>
     )

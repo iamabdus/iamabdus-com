@@ -3,7 +3,7 @@ import Helmet from 'react-helmet'
 import styled from 'styled-components'
 import { StaticQuery, graphql } from 'gatsby'
 import posed from 'react-pose'
-import { GlobalContext } from '../contexts/GlobalContext'
+import { navigate } from '@reach/router'
 import media from './utility/media'
 import theme from './utility/theme'
 import baseStyles from './utility/basestyle'
@@ -49,21 +49,22 @@ const LayoutContainerBase = styled.div`
     padding-bottom: 120px;
   }
 `
-
 const PosedLayoutSidenav = posed(LayoutContainerBase)({
   closed: { x: '-115vw' },
   open: {
     x: 0,
-    transition: {
-      duration: 500,
-      ease: 'easeOut',
+    transition: ({ timingOffset }) => {
+      return {
+        duration: timingOffset,
+        ease: 'easeOut',
+      }
     },
   },
 })
 
 const LayoutSidenav = styled(PosedLayoutSidenav)`
-  position: relative;
   position: fixed;
+  z-index: 100;
   min-height: 100%;
   display: flex;
   ::before {
@@ -90,7 +91,7 @@ const LayoutContainer = styled(LayoutContainerBase)`
 const PosedLayoutContainer = posed(LayoutContainer)({
   enter: {
     opacity: 1,
-    delayChildren: 700,
+    delayChildren: ({ isfirstLoad }) => (isfirstLoad ? 700 : 100),
     staggerChildren: 0,
     transition: {
       ease: 'easeOut',
@@ -99,36 +100,78 @@ const PosedLayoutContainer = posed(LayoutContainer)({
   exit: { opacity: 0, delay: 0 },
 })
 
-class Layout extends Component {
-  constructor() {
-    super()
+const PosedPageChanger = posed.div({
+  enter: {
+    x: '0vw',
+    // transition: {
+    //   x: {
+    //     ease: 'easeInOut',
+    //     duration: 1000,
+    //   },
+    // },
+    transition: ({ from, to }) => ({
+      type: 'keyframes',
+      values: ['100vw', '0vw', '0vw', '-100vw'],
+      times: [0, 0.33, 0.66, 1],
+      duration: 1000
+    })
+  },
+  exit: {
+    x: '100vw',
+    transition: {
+      x: {
+        ease: 'easeIn',
+        duration: 1000,
+      },
+    },
+  },
+})
 
-    if (!window.isVisited) {
-      this.state = {
-        openSidebar: false,
-        visitedFirst: true,
-      }
-      //Set global variable checker isVisited
-      window.isVisited = true
-    } else {
-      this.state = {
-        openSidebar: false,
-      }
-    }
+const PageChanger = styled(PosedPageChanger)`
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  z-index: 10;
+  background: ${theme.primary};
+`
+
+class Layout extends Component {
+  state = {
+    pageChanging: false,
+    contentLoader: false,
   }
 
-  componentDidMount() {
-    this.openSidebar = setTimeout(() => {
-      this.setState({ openSidebar: !this.state.openSidebar })
-    }, 100)
+  startPageChanging = nextPagePath => {
+    this.setState(prevState => {
+      return {
+        pageChanging: true,
+        nextPagePath,
+      }
+    })
+
+    this.timerContentLoader = setTimeout(() => {
+      this.setState({
+        contentLoader: true,
+      })
+    }, 350)
+  }
+
+  stopPageChanging = () => {
+    navigate(this.state.nextPagePath)
+    this.setState({
+      pageChanging: false,
+      contentLoader: false,
+    })
   }
 
   componentWillUnmount() {
-    clearTimeout(this.openSidebar)
+    clearTimeout(this.timerContentLoader)
   }
 
   render() {
-    const { children } = this.props
+    const { children, isfirstLoad, timingOffset } = this.props
     return (
       <StaticQuery
         query={graphql`
@@ -170,21 +213,33 @@ class Layout extends Component {
             {baseStyles()}
 
             <div className="layout-wrapper">
+              {this.state.pageChanging ? (
+                <PageChanger
+                  onPoseComplete={() => this.stopPageChanging()}
+                  initialPose="exit"
+                  pose="enter"
+                />
+              ) : null}
               <Overlay />
               <LayoutInner>
-                {this.state.visitedFirst ? (
-                  <LayoutSidenav
-                    pose={this.state.openSidebar ? 'open' : 'closed'}
-                  >
-                    <Sidebar visitedFirst />
-                  </LayoutSidenav>
-                ) : (
-                  <LayoutSidenav pose="open">
-                    <Sidebar />
-                  </LayoutSidenav>
-                )}
-                <PosedLayoutContainer isfirstLoad={this.props.isfirstLoad} initialPose="exit" pose="enter">
-                  {children}
+                <LayoutSidenav
+                  timingOffset={timingOffset}
+                  initialPose={isfirstLoad ? 'closed' : 'open'}
+                  pose="open"
+                >
+                  <Sidebar
+                    isfirstLoad={isfirstLoad}
+                    timingOffset={timingOffset}
+                    startPageChangingHandler={this.startPageChanging}
+                  />
+                </LayoutSidenav>
+
+                <PosedLayoutContainer
+                  isfirstLoad={isfirstLoad}
+                  initialPose="exit"
+                  pose="enter"
+                >
+                  {this.state.contentLoader ? null : children}
                 </PosedLayoutContainer>
               </LayoutInner>
             </div>
@@ -195,16 +250,4 @@ class Layout extends Component {
   }
 }
 
-class LayoutWrapper extends Component {
-  render() {
-    return (
-      <GlobalContext.Consumer>
-        {({ isfirstLoad }) => (
-          <Layout {...this.props} isfirstLoad={isfirstLoad} />
-        )}
-      </GlobalContext.Consumer>
-    )
-  }
-}
-
-export default LayoutWrapper
+export default Layout

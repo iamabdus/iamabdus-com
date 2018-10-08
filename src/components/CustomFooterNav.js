@@ -1,6 +1,5 @@
 import React from 'react'
 import styled, { keyframes } from 'styled-components'
-import posed from 'react-pose'
 import { Link } from 'gatsby'
 import theme from '../components/utility/theme'
 import media from '../components/utility/media'

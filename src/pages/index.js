@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
 import posed, { PoseGroup } from 'react-pose'
+import withPageWrapper from '../components/PageWrapper'
 import media from '../components/utility/media'
 import Layout from '../components/Layout'
 import Tagline from '../components/Tagline'
@@ -31,7 +32,7 @@ const PosedFeatures = posed(Features)({
     transition: {
       opacity: { ease: 'easeOut', duration: 200, delay: 350 },
       x: { ease: 'easeOut', duration: 500, delay: 350 },
-    }
+    },
   },
   exit: {
     x: -25,
@@ -49,19 +50,18 @@ const PosedFooter = posed.div({
     opacity: 1,
     transition: {
       opacity: { ease: 'easeOut', duration: 200, delay: 550 },
-      x: { ease: 'easeOut', duration: 500, delay: 550},
-    }
+      x: { ease: 'easeOut', duration: 500, delay: 550 },
+    },
   },
   exit: {
     x: -25,
     opacity: 0,
     transition: {
-      opacity: { ease: 'easeIn', duration: 200,  },
-      x: { ease: 'easeIn', duration: 500,},
+      opacity: { ease: 'easeIn', duration: 200 },
+      x: { ease: 'easeIn', duration: 500 },
     },
   },
 })
-
 
 class IndexPage extends Component {
   constructor() {
@@ -77,15 +77,20 @@ class IndexPage extends Component {
   }
 
   render() {
+    const { isfirstLoad, timingOffset } = this.props
     const { isVisible } = this.state
     return (
-      <Layout>
+      <Layout {...this.props}>
         <Content>
           <div className="heading">
             <Tagline>i am abdus</Tagline>
             <PoseGroup>
               {isVisible && [
-                <Title key="title" customDelay={800} titles={titles} />,
+                <Title
+                  key="title"
+                  customDelay={isfirstLoad ? timingOffset + 200 : 200}
+                  titles={titles}
+                />,
               ]}
             </PoseGroup>
           </div>
@@ -99,7 +104,7 @@ class IndexPage extends Component {
           </PosedFeatures>
         </Content>
         <PosedFooter className="footer" initialPose="exit" pose="enter">
-          <CustomFooterNav/>
+          <CustomFooterNav />
         </PosedFooter>
         ,
       </Layout>
@@ -107,4 +112,4 @@ class IndexPage extends Component {
   }
 }
 
-export default IndexPage
+export default withPageWrapper(IndexPage)
