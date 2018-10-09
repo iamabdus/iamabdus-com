@@ -3,6 +3,7 @@ import styled from 'styled-components'
 import theme from './utility/theme'
 import media from './utility/media'
 import { Link } from 'gatsby'
+import { Location } from '@reach/router'
 
 const StyledSideMenu = styled.ul`
   width: 50px;
@@ -103,41 +104,52 @@ const menuItems = [
 class SideMenu extends Component {
   state = {
     hideLink: false,
-    currentPagePath: null,
   }
 
-  clicked = (e, nextPagePath, currentPagePath) => {
+  clicked = (e, nextPageLocation, currentPageLocation) => {
     e.preventDefault()
-    if (nextPagePath === currentPagePath) return
+    if (nextPageLocation === currentPageLocation) return
 
     //Pass handller back to Layout.js for page transition function
-    this.props.startPageChangingHandler(nextPagePath)
+    this.props.startPageChangingHandler(nextPageLocation)
 
-    this.setState({ hideLink: true, currentPagePath: nextPagePath })
+    this.setState({ hideLink: true})
+    this.timerHideLink = setTimeout(() => {
+      this.setState({ hideLink: false })
+    }, 1000)
+  }
+
+  componentWillUnmount() {
+    clearTimeout(this.timerHideLink)
   }
 
   render() {
-    const { hideLink, currentPagePath } = this.state
-    const { location } = this.props
-
-    //location.pathname is set to currentPage when component mount but after clicking currentPage change by nextPagePath provide by LinkItem
-    const currentPage = currentPagePath || location.pathname
-
+    const { hideLink } = this.state
+    const { currentPagePath } = this.props
     return (
-      <StyledSideMenu>
-        {menuItems.map(({ path, text }) => (
-          <ListItem key={path}>
-            <BarItem className={currentPage === path ? 'active' : null} />
-            <LinkItem
-              style={hideLink ? hiddenLink : null}
-              to={path}
-              onClick={e => this.clicked(e, path, currentPage)}
-            >
-              {text}
-            </LinkItem>
-          </ListItem>
-        ))}
-      </StyledSideMenu>
+      <Location>
+        {({ location }) => {
+          //location.pathname is set to currentPage when first page load but after clicking currentPage change by props.currentPagePath provide by Layout
+          const currentPageLocation = currentPagePath || location.pathname
+
+          return (
+            <StyledSideMenu>
+              {menuItems.map(({ path, text }) => (
+                <ListItem key={path}>
+                  <BarItem className={currentPageLocation === path ? 'active' : null} />
+                  <LinkItem
+                    style={hideLink ? hiddenLink : null}
+                    to={path}
+                    onClick={e => this.clicked(e, path, currentPageLocation)}
+                  >
+                    {text}
+                  </LinkItem>
+                </ListItem>
+              ))}
+            </StyledSideMenu>
+          )
+        }}
+      </Location>
     )
   }
 }

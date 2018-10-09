@@ -47,12 +47,12 @@ class Sidebar extends Component {
   }
 
   render() {
-    const { isfirstLoad, timingOffset, ...rest } = this.props
+    const { isFirstLoad, timingOffset, ...rest } = this.props
 
     return (
       <StyledSidebar
         timingOffset={timingOffset}
-        initialPose={isfirstLoad ? 'hidden' : 'visible'}
+        initialPose={isFirstLoad ? 'hidden' : 'visible'}
         pose="visible"
       >
         <Logo />

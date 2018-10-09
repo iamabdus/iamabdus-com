@@ -3,12 +3,13 @@ module.exports = {
     title: 'I am Abdus',
   },
   plugins: [
+    'gatsby-plugin-styled-components',
     'gatsby-plugin-react-helmet',
     {
       resolve: `gatsby-plugin-manifest`,
       options: {
-        name: 'gatsby-starter-default',
-        short_name: 'starter',
+        name: 'I am Abdus',
+        short_name: 'iamabdus',
         start_url: '/',
         background_color: '#663399',
         theme_color: '#663399',
@@ -17,22 +18,21 @@ module.exports = {
       },
     },
     {
-			resolve: 'gatsby-source-wordpress',
-			options: {
-				baseUrl: 'YOUR SITE URL',
-				protocol: 'https',
-				hostingWPCOM: true,
-				useACF: false,
-				auth: {
-					wpcom_app_clientSecret: 'CLIENT SECRET',
-					wpcom_app_clientId: 'CLIENT ID',
-					wpcom_user: 'USERNAME',
-					wpcom_pass: 'PASSWORD',
-				},
-				verboseOutput: false,
-			},
-		},
+      resolve: 'gatsby-source-wordpress',
+      options: {
+        baseUrl: 'YOUR SITE URL',
+        protocol: 'https',
+        hostingWPCOM: true,
+        useACF: false,
+        auth: {
+          wpcom_app_clientSecret: 'CLIENT SECRET',
+          wpcom_app_clientId: 'CLIENT ID',
+          wpcom_user: 'USERNAME',
+          wpcom_pass: 'PASSWORD',
+        },
+        verboseOutput: false,
+      },
+    },
     'gatsby-plugin-offline',
-    'gatsby-plugin-styled-components',
   ],
 }

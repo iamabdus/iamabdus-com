@@ -1,13 +1,11 @@
 import React, { Component } from 'react'
-import Helmet from 'react-helmet'
 import styled from 'styled-components'
-import { StaticQuery, graphql } from 'gatsby'
 import posed from 'react-pose'
 import { navigate } from '@reach/router'
-import media from './utility/media'
-import theme from './utility/theme'
-import baseStyles from './utility/basestyle'
-import Sidebar from './Sidebar'
+import media from '../utility/media'
+import theme from '../utility/theme'
+import baseStyles from '../utility/basestyle'
+import Sidebar from '../Sidebar'
 
 const Overlay = styled.div`
   position: absolute;
@@ -91,7 +89,7 @@ const LayoutContainer = styled(LayoutContainerBase)`
 const PosedLayoutContainer = posed(LayoutContainer)({
   enter: {
     opacity: 1,
-    delayChildren: ({ isfirstLoad }) => (isfirstLoad ? 700 : 100),
+    delayChildren: ({ isFirstLoad }) => (isFirstLoad ? 700 : 100),
     staggerChildren: 0,
     transition: {
       ease: 'easeOut',
@@ -103,12 +101,6 @@ const PosedLayoutContainer = posed(LayoutContainer)({
 const PosedPageChanger = posed.div({
   enter: {
     x: '100vw',
-    // transition: {
-    //   x: {
-    //     ease: 'easeInOut',
-    //     duration: 1000,
-    //   },
-    // },
     transition: ({ from, to }) => ({
       type: 'keyframes',
       values: ['100vw', '0vw', '0vw', '-100vw'],
@@ -121,7 +113,7 @@ const PosedPageChanger = posed.div({
     transition: {
       x: {
         ease: 'easeIn',
-        duration: 1000,
+        duration: 800,
       },
     },
   },
@@ -139,18 +131,28 @@ const PageChanger = styled(PosedPageChanger)`
 
 class Layout extends Component {
   state = {
+    loadContent: false,
     pageChanging: false,
     contentLoader: false,
+    currentPagePath: null,
+  }
+
+  componentDidMount() {
+    this.setState(state => {
+      return {
+        loadContent: true,
+      }
+    })
   }
 
   /**
    *  To make page transition effect
    *  args: nextPagePath
    */
-  startPageChanging = nextPagePath => {
+  startPageChanging = currentPagePath => {
     this.setState({
       pageChanging: true,
-      nextPagePath,
+      currentPagePath,
     })
 
     //Place loader for nextPage content after some time
@@ -165,7 +167,7 @@ class Layout extends Component {
    * Navigate to the `nextPagePath` after page transition
    */
   stopPageChanging = () => {
-    navigate(this.state.nextPagePath)
+    navigate(this.state.currentPagePath)
     this.setState({
       pageChanging: false,
       contentLoader: false,
@@ -177,83 +179,55 @@ class Layout extends Component {
   }
 
   render() {
-    const { children, isfirstLoad, timingOffset, ...rest } = this.props
-    return (
-      <StaticQuery
-        query={graphql`
-          query SiteTitleQuery {
-            site {
-              siteMetadata {
-                title
-              }
-            }
-          }
-        `}
-        render={data => (
-          <>
-            <Helmet
-              title={data.site.siteMetadata.title}
-              meta={[
-                { name: 'description', content: 'I am Abdus Salam' },
-                {
-                  name: 'keywords',
-                  content:
-                    'iamabdus, wordpress, design, sketch, photoshop, illustrator, adobe xd',
-                },
-              ]}
-            >
-              <html lang="en" />
-              <link
-                href="https://fonts.googleapis.com/css?family=Abril+Fatface|Montserrat:400,500"
-                rel="stylesheet"
-              />
-              <style type="text/css">{`
-                  html,body {
-                      background-color: ${theme.bodyBg};
-                      margin: 0;
-                      padding: 0;
-                      overflow: hidden
-                  }
-              `}</style>
-            </Helmet>
-            {baseStyles()}
+    const { children, isFirstLoad, timingOffset, ...rest } = this.props
+    const {
+      loadContent,
+      pageChanging,
+      contentLoader,
+      currentPagePath,
+    } = this.state
 
-            <div className="layout-wrapper">
-              {this.state.pageChanging ? (
-                <PageChanger
-                  onPoseComplete={() => this.stopPageChanging()}
-                  initialPose="exit"
-                  pose="enter"
-                />
-              ) : null}
-              <Overlay />
-              <LayoutInner>
-                <LayoutSidenav
-                  timingOffset={timingOffset}
-                  initialPose={isfirstLoad ? 'closed' : 'open'}
-                  pose="open"
-                >
-                  <Sidebar
-                    isfirstLoad={isfirstLoad}
-                    timingOffset={timingOffset}
-                    startPageChangingHandler={this.startPageChanging}
-                    {...rest}
-                  />
-                </LayoutSidenav>
+    const pageChildren = React.cloneElement(children, {
+      isFirstLoad: isFirstLoad,
+      timingOffset: timingOffset,
+      startPageChangingHandler: this.startPageChanging,
+    })
 
-                <PosedLayoutContainer
-                  isfirstLoad={isfirstLoad}
-                  initialPose="exit"
-                  pose="enter"
-                >
-                  {this.state.contentLoader ? null : children}
-                </PosedLayoutContainer>
-              </LayoutInner>
-            </div>
-          </>
-        )}
-      />
-    )
+    return loadContent ? (
+      <div className="layout-wrapper">
+        {pageChanging ? (
+          <PageChanger
+            onPoseComplete={() => this.stopPageChanging()}
+            initialPose="exit"
+            pose="enter"
+          />
+        ) : null}
+        <Overlay />
+        <LayoutInner>
+          <LayoutSidenav
+            timingOffset={timingOffset}
+            initialPose={isFirstLoad ? 'closed' : 'open'}
+            pose="open"
+          >
+            <Sidebar
+              isFirstLoad={isFirstLoad}
+              timingOffset={timingOffset}
+              currentPagePath={currentPagePath}
+              startPageChangingHandler={this.startPageChanging}
+              {...rest}
+            />
+          </LayoutSidenav>
+
+          <PosedLayoutContainer
+            isFirstLoad={isFirstLoad}
+            initialPose="exit"
+            pose="enter"
+          >
+            {contentLoader ? null : pageChildren}
+          </PosedLayoutContainer>
+        </LayoutInner>
+      </div>
+    ) : null
   }
 }
 

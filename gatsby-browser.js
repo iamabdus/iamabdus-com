@@ -1,22 +1,23 @@
 import React from 'react'
-import GlobalContextProvider from './src/contexts/GlobalContextProvider'
+import PageWrapper from './src/components/wrappers/PageWrapper';
+
+let isFirstLoad
 
 const onClientEntry = () => {
   console.log("I've started!")
+  isFirstLoad = true
 }
 
-let currentLocation = ''
-
-const onPreRouteUpdate = ({ location }) => {
-  currentLocation = location.pathname
+const onRouteUpdate = ({ location }) => {
+  isFirstLoad = false
 }
 
 const wrapPageElement = ({ element, props }) => {
   return (
-    <GlobalContextProvider {...props} location={currentLocation}>
+    <PageWrapper {...props} isFirstLoad={isFirstLoad}>
       {element}
-    </GlobalContextProvider>
+    </PageWrapper>
   )
 }
 
-export { onClientEntry, onPreRouteUpdate, wrapPageElement }
+export { onClientEntry, onRouteUpdate, wrapPageElement }

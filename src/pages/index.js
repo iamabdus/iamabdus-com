@@ -1,9 +1,7 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
-import posed, { PoseGroup } from 'react-pose'
-import withPageWrapper from '../components/PageWrapper'
+import posed from 'react-pose'
 import media from '../components/utility/media'
-import Layout from '../components/Layout'
 import Tagline from '../components/Tagline'
 import Title from '../components/Title'
 import Text from '../components/Text'
@@ -63,38 +61,27 @@ const PosedFooter = posed.div({
   },
 })
 
-class IndexPage extends Component {
-  constructor() {
-    super()
-    this.state = {
-      isVisible: false,
-    }
-  }
+class Index extends Component {
 
-  componentDidMount() {
-    this.setState({ isVisible: true })
-  }
 
   render() {
-    const { isfirstLoad, timingOffset } = this.props
-    const { isVisible } = this.state
+    const { isFirstLoad, timingOffset, ...rest } = this.props
     return (
-      <Layout {...this.props}>
+      <>
         <Content>
           <div className="heading">
-            <Tagline>i am abdus</Tagline>
-            <PoseGroup>
-              {isVisible && [
-                <Title
-                  key="title"
-                  customDelay={isfirstLoad ? timingOffset + 200 : 200}
-                  titles={titles}
-                />,
-              ]}
-            </PoseGroup>
+            <Tagline initialPose="exit" pose="enter">
+              i am abdus
+            </Tagline>
+
+            <Title
+              key="title"
+              customDelay={isFirstLoad ? timingOffset + 300 : 200}
+              titles={titles}
+            />
           </div>
 
-          <PosedFeatures>
+          <PosedFeatures initialPose="exit" pose="enter">
             <Text>Father of two boys</Text>
             <Text>Husband of a talent lady</Text>
             <Text>Founder of TAF Technology</Text>
@@ -103,12 +90,11 @@ class IndexPage extends Component {
           </PosedFeatures>
         </Content>
         <PosedFooter className="footer" initialPose="exit" pose="enter">
-          <CustomFooterNav />
+          <CustomFooterNav {...rest} />
         </PosedFooter>
-        ,
-      </Layout>
+      </>
     )
   }
 }
 
-export default withPageWrapper(IndexPage)
+export default Index

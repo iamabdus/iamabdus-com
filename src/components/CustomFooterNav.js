@@ -1,8 +1,8 @@
-import React from 'react'
+import React, {Component} from 'react'
 import styled, { keyframes } from 'styled-components'
 import { Link } from 'gatsby'
-import theme from '../components/utility/theme'
-import media from '../components/utility/media'
+import theme from './utility/theme'
+import media from './utility/media'
 
 const FooterNav = styled.ul`
   margin: 0;
@@ -69,27 +69,36 @@ const NavLink = styled(Link)`
 
 const navItems = [
   {
-    to: '/portfolio/',
+    path: '/portfolio/',
     text: 'Portfolio',
   },
   {
-    to: '/blog/',
+    path: '/blog/',
     text: 'My Blog',
   },
   {
-    to: '/contact/',
+    path: '/contact/',
     text: 'Contact',
   },
 ]
 
-class CustomFooterNav extends React.PureComponent {
+class CustomFooterNav extends Component {
   render() {
+    const { startPageChangingHandler } = this.props
     return (
       <FooterNav>
         {navItems.map((item, i) => {
           return (
             <NavItem key={i}>
-              <NavLink to={item.to}>{item.text}</NavLink>
+              <NavLink
+                to={item.path}
+                onClick={(e) => {
+                  e.preventDefault()
+                  startPageChangingHandler(item.path)
+                }}
+              >
+                {item.text}
+              </NavLink>
             </NavItem>
           )
         })}
