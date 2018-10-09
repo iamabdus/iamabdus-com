@@ -7,7 +7,6 @@ import Tagline from '../components/Tagline'
 class Portfolio extends Component {
   constructor() {
     super()
-
     this.state = {
       isVisible: false,
     }

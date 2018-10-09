@@ -3,7 +3,6 @@ import styled from 'styled-components'
 import theme from './utility/theme'
 import media from './utility/media'
 import { Link } from 'gatsby'
-import { Location } from '@reach/router'
 
 const StyledSideMenu = styled.ul`
   width: 50px;
@@ -38,7 +37,7 @@ const BarItem = styled.span`
   width: 2px;
   height: 25px;
   background-color: ${theme.secondary};
-  ${ListItem}.active & {
+  &.active {
     background-color: ${theme.primary};
   }
 `
@@ -76,77 +75,69 @@ const LinkItem = styled(Link)`
   }
 `
 
+//Hidden link after click ti page navigate
+const hiddenLink = {
+  opacity: 0,
+  visibility: 'hidden',
+}
+
+const menuItems = [
+  {
+    path: '/',
+    text: 'about me',
+  },
+  {
+    path: '/portfolio/',
+    text: 'portfolio',
+  },
+  {
+    path: '/blog/',
+    text: 'blog',
+  },
+  {
+    path: '/contact/',
+    text: 'contact',
+  },
+]
+
 class SideMenu extends Component {
-  clicked = (e, nextPagePath, currentPath) => {
+  state = {
+    hideLink: false,
+    currentPagePath: null,
+  }
+
+  clicked = (e, nextPagePath, currentPagePath) => {
     e.preventDefault()
-    if (nextPagePath === currentPath) return
+    if (nextPagePath === currentPagePath) return
+
+    //Pass handller back to Layout.js for page transition function
     this.props.startPageChangingHandler(nextPagePath)
+
+    this.setState({ hideLink: true, currentPagePath: nextPagePath })
   }
 
   render() {
+    const { hideLink, currentPagePath } = this.state
+    const { location } = this.props
+
+    //location.pathname is set to currentPage when component mount but after clicking currentPage change by nextPagePath provide by LinkItem
+    const currentPage = currentPagePath || location.pathname
+
     return (
-      <Location>
-        {({ location }) => (
-          <StyledSideMenu>
-            <ListItem className={location.pathname === '/' ? 'active' : null}>
-              <BarItem />
-              <LinkItem
-                to="/"
-                onClick={(e, path = '/', currentPath = location.pathname) =>
-                  this.clicked(e, path, currentPath)
-                }
-              >
-                about me
-              </LinkItem>
-            </ListItem>
-            <ListItem
-              className={location.pathname === '/portfolio/' ? 'active' : null}
+      <StyledSideMenu>
+        {menuItems.map(({ path, text }) => (
+          <ListItem key={path}>
+            <BarItem className={currentPage === path ? 'active' : null} />
+            <LinkItem
+              style={hideLink ? hiddenLink : null}
+              to={path}
+              onClick={e => this.clicked(e, path, currentPage)}
             >
-              <BarItem />
-              <LinkItem
-                to="/portfolio/"
-                onClick={(
-                  e,
-                  path = '/portfolio/',
-                  currentPath = location.pathname
-                ) => this.clicked(e, path, currentPath)}
-              >
-                portfolio
-              </LinkItem>
-            </ListItem>
-            <ListItem
-              className={location.pathname === '/blog/' ? 'active' : null}
-            >
-              <BarItem />
-              <LinkItem
-                to="/blog/"
-                onClick={(
-                  e,
-                  path = '/blog/',
-                  currentPath = location.pathname
-                ) => this.clicked(e, path, currentPath)}
-              >
-                blog
-              </LinkItem>
-            </ListItem>
-            <ListItem
-              className={location.pathname === '/contact/' ? 'active' : null}
-            >
-              <BarItem />
-              <LinkItem
-                to="/contact/"
-                onClick={(
-                  e,
-                  path = '/contact/',
-                  currentPath = location.pathname
-                ) => this.clicked(e, path, currentPath)}
-              >
-                contact
-              </LinkItem>
-            </ListItem>
-          </StyledSideMenu>
-        )}
-      </Location>
+              {text}
+            </LinkItem>
+          </ListItem>
+        ))}
+      </StyledSideMenu>
     )
   }
 }

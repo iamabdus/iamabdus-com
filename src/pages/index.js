@@ -66,7 +66,6 @@ const PosedFooter = posed.div({
 class IndexPage extends Component {
   constructor() {
     super()
-
     this.state = {
       isVisible: false,
     }

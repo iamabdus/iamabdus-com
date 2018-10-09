@@ -102,7 +102,7 @@ const PosedLayoutContainer = posed(LayoutContainer)({
 
 const PosedPageChanger = posed.div({
   enter: {
-    x: '0vw',
+    x: '100vw',
     // transition: {
     //   x: {
     //     ease: 'easeInOut',
@@ -113,8 +113,8 @@ const PosedPageChanger = posed.div({
       type: 'keyframes',
       values: ['100vw', '0vw', '0vw', '-100vw'],
       times: [0, 0.33, 0.66, 1],
-      duration: 1000
-    })
+      duration: 800,
+    }),
   },
   exit: {
     x: '100vw',
@@ -143,14 +143,17 @@ class Layout extends Component {
     contentLoader: false,
   }
 
+  /**
+   *  To make page transition effect
+   *  args: nextPagePath
+   */
   startPageChanging = nextPagePath => {
-    this.setState(prevState => {
-      return {
-        pageChanging: true,
-        nextPagePath,
-      }
+    this.setState({
+      pageChanging: true,
+      nextPagePath,
     })
 
+    //Place loader for nextPage content after some time
     this.timerContentLoader = setTimeout(() => {
       this.setState({
         contentLoader: true,
@@ -158,6 +161,9 @@ class Layout extends Component {
     }, 350)
   }
 
+  /**
+   * Navigate to the `nextPagePath` after page transition
+   */
   stopPageChanging = () => {
     navigate(this.state.nextPagePath)
     this.setState({
@@ -171,7 +177,7 @@ class Layout extends Component {
   }
 
   render() {
-    const { children, isfirstLoad, timingOffset } = this.props
+    const { children, isfirstLoad, timingOffset, ...rest } = this.props
     return (
       <StaticQuery
         query={graphql`
@@ -231,6 +237,7 @@ class Layout extends Component {
                     isfirstLoad={isfirstLoad}
                     timingOffset={timingOffset}
                     startPageChangingHandler={this.startPageChanging}
+                    {...rest}
                   />
                 </LayoutSidenav>
 
