@@ -3,11 +3,9 @@ import styled from 'styled-components'
 import posed from 'react-pose'
 import media from '../components/utility/media'
 import Tagline from '../components/Tagline'
-import Title from '../components/title-home'
-import Text from '../components/text1'
+import Text from '../components/Text'
 import CustomFooterNav from '../components/CustomFooterNav'
 
-const titles = ['UX-Designer', 'UI-Designer', 'Enterpreneur']
 
 const Content = styled.div`
   display: flex;
@@ -74,11 +72,6 @@ class Portfolio extends Component {
               i am abdus
             </Tagline>
 
-            <Title
-              key="title"
-              customDelay={isFirstLoad ? timingOffset + 300 : 200}
-              titles={titles}
-            />
           </div>
 
           <PosedFeatures initialPose="exit" pose="enter">
