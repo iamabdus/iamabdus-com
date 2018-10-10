@@ -28,54 +28,7 @@ const StyledTitle = styled(SplitText)`
     }
   `
 
-const charPoses = {
-  first: {
-    opacity: 0,
-    marginLeft: ({ children }) => {
-      return /-/.test(children) ? '-10px' : '1px'
-    },
-    x: 1,
-  },
-  middle: {
-    opacity: ({ children }) => {
-      return /-/.test(children) ? 0 : 1
-    },
-    marginLeft: ({ children }) => {
-      return /-/.test(children) ? '-10px' : '1px'
-    },
-    x: 1,
-    delay: ({ charIndex }) => charIndex * 80,
-    transition: {
-      ease: 'easeOut',
-    },
-  },
-}
-const charPosesLater = {
-  middle: {
-    opacity: ({ children }) => {
-      return /-/.test(children) ? 0 : 1
-    },
-    marginLeft: ({ children }) => {
-      return /-/.test(children) ? '-10px' : '1px'
-    },
-    x: 1,
-  },
-  last: {
-    opacity: 0,
-    marginLeft: ({ children }) => {
-      return /-/.test(children) ? '-10px' : '1px'
-    },
-    x: 0,
-    delay: ({ charIndex, numChars }) => {
-      return (numChars - charIndex) * 30
-    },
-    transition: {
-      ease: 'easeOut',
-    },
-  },
-}
-
-class TitleHome extends Component {
+class Title extends Component {
   state = {
     isFirst: true,
     show: false,
@@ -174,4 +127,4 @@ class TitleHome extends Component {
   }
 }
 
-export default TitleHome
+export default Title
