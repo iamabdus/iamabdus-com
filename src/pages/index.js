@@ -3,8 +3,8 @@ import styled from 'styled-components'
 import posed from 'react-pose'
 import media from '../components/utility/media'
 import Tagline from '../components/Tagline'
-import Title from '../components/Title'
-import Text from '../components/Text'
+import Title from '../components/title-home'
+import Text from '../components/text1'
 import CustomFooterNav from '../components/CustomFooterNav'
 
 const titles = ['UX-Designer', 'UI-Designer', 'Enterpreneur']
