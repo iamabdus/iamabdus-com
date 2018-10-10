@@ -9,8 +9,21 @@ import baseStyles from '../utility/basestyle'
 const timingOffset = 500
 
 class PageWrapper extends Component {
+  state = {
+    loadPage: false,
+  }
+
+  componentDidMount() {
+    this.setState(state => {
+      return {
+        loadPage: true,
+      }
+    })
+  }
+
   render() {
     const { children, ...rest } = this.props
+    const { loadPage } = this.state
 
     return (
       <StaticQuery
@@ -53,9 +66,11 @@ class PageWrapper extends Component {
 
             {baseStyles()}
 
-            <Layout {...rest} timingOffset={timingOffset}>
-              {children}
-            </Layout>
+            {loadPage ? (
+              <Layout {...rest} timingOffset={timingOffset}>
+                {children}
+              </Layout>
+            ) : null}
           </>
         )}
       />

@@ -131,18 +131,9 @@ const PageChanger = styled(PosedPageChanger)`
 
 class Layout extends Component {
   state = {
-    loadContent: false,
     pageChanging: false,
     contentLoader: false,
     currentPagePath: null,
-  }
-
-  componentDidMount() {
-    this.setState(state => {
-      return {
-        loadContent: true,
-      }
-    })
   }
 
   /**
@@ -180,12 +171,7 @@ class Layout extends Component {
 
   render() {
     const { children, isFirstLoad, timingOffset, ...rest } = this.props
-    const {
-      loadContent,
-      pageChanging,
-      contentLoader,
-      currentPagePath,
-    } = this.state
+    const { pageChanging, contentLoader, currentPagePath } = this.state
 
     const pageChildren = React.cloneElement(children, {
       isFirstLoad: isFirstLoad,
@@ -193,7 +179,7 @@ class Layout extends Component {
       startPageChangingHandler: this.startPageChanging,
     })
 
-    return loadContent ? (
+    return (
       <div className="layout-wrapper">
         {pageChanging ? (
           <PageChanger
@@ -227,7 +213,7 @@ class Layout extends Component {
           </PosedLayoutContainer>
         </LayoutInner>
       </div>
-    ) : null
+    )
   }
 }
 
