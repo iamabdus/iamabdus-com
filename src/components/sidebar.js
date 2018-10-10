@@ -55,7 +55,7 @@ class Sidebar extends Component {
         initialPose={isFirstLoad ? 'hidden' : 'visible'}
         pose="visible"
       >
-        <Logo />
+        <Logo {...rest} />
         <SideMenu {...rest} />
         <SidebarSocial />
       </StyledSidebar>

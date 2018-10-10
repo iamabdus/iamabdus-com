@@ -4,7 +4,6 @@ import posed from 'react-pose'
 import { navigate } from '@reach/router'
 import media from '../utility/media'
 import theme from '../utility/theme'
-import baseStyles from '../utility/basestyle'
 import Sidebar from '../Sidebar'
 
 const Overlay = styled.div`
