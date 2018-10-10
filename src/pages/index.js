@@ -63,7 +63,6 @@ const PosedFooter = posed.div({
 
 class Index extends Component {
 
-
   render() {
     const { isFirstLoad, timingOffset, ...rest } = this.props
     return (

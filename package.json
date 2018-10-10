@@ -24,6 +24,7 @@
     "react-helmet": "^5.2.0",
     "react-pose": "^3.3.6",
     "react-pose-text": "^3.1.0",
+    "react-reveal": "^1.2.2",
     "styled-components": "^3.4.9",
     "styled-reboot": "^3.0.0"
   },

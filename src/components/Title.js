@@ -1,130 +1,36 @@
-import React, { Component } from 'react'
+import posed from 'react-pose'
 import styled from 'styled-components'
-import media from './utility/media'
 import theme from './utility/theme'
-import SplitText from 'react-pose-text'
 
-const StyledTitle = styled(SplitText)`
-    font-family: ${theme.fontTitle};
-      font-size: 36px;
-      font-weight: normal;
-      font-style: normal;
-      line-height: 1;
-      color: #ffffff;
-      margin: 0;
-      margin-left: -5px;
-      line-height: 1.83;
-      letter-spacing: 3.6px;
-      @media(min-width: ${media.md}){
-        font-size: 60px;
-        letter-spacing: 6px;
-      }
-      @media(min-width: ${media.xl}){
-        font-size: 105px;
-        font-size: 105px;
-        line-height: 1.04;
-        letter-spacing: 10.5px;
-      }
-    }
-  `
+const PosedTitle = posed.div({
+  enter: {
+    x: 0,
+    opacity: 1,
+    transition: {
+      opacity: { ease: 'easeOut', duration: 100, delay: 200 },
+      x: { ease: 'easeOut', duration: 300, delay: 200 },
+    },
+  },
+  exit: {
+    x: -25,
+    opacity: 0,
+    transition: {
+      opacity: { ease: 'easeIn', duration: 100 },
+      x: { ease: 'easeIn', duration: 300 },
+    },
+  },
+})
 
-class Title extends Component {
-  state = {
-    isFirst: true,
-    show: false,
-    text: this.props.titles[0],
-    count: 1,
-    currentTitleIndex: 0,
-  }
-
-  componentDidMount() {
-    this.timeShow = setTimeout(() => {
-      this.setState({ show: true })
-    }, this.props.customDelay)
-  }
-
-  FireMe = () => {
-    const textLength = this.state.text.replace(/\s/g, '').length
-
-    if (this.state.count < textLength - 1) {
-      this.setState(prevState => {
-        return {
-          count: prevState.count + 1,
-        }
-      })
-    } else {
-      if (this.state.count === textLength - 1) {
-        //Set delay after first round animation
-        this.timeout = setTimeout(() => {
-          this.setState(prevState => {
-            return {
-              isFirst: false,
-            }
-          })
-        }, 3000)
-      }
-
-      this.setState(prevState => {
-        return {
-          count: prevState.count + 1,
-        }
-      })
-    }
-
-    //For new text item
-    if (this.state.count >= textLength * 2 - 1) {
-      this.setState(prevState => {
-        let newIndex =
-          (prevState.currentTitleIndex + 1) % this.props.titles.length
-
-        return {
-          currentTitleIndex: newIndex,
-          count: 1,
-          isFirst: true,
-          text: this.props.titles[newIndex],
-        }
-      })
-    }
-  }
-
-  componentWillUnmount() {
-    clearTimeout(this.timeout)
-    clearTimeout(this.timeShow)
-  }
-
-  render() {
-    return (
-      <div>
-        {this.state.show ? (
-          <div>
-            {this.state.isFirst ? (
-              <StyledTitle
-                key={'splittext' + this.state.text + this.state.isFirst}
-                onPoseComplete={() => this.FireMe()}
-                initialPose="first"
-                pose="middle"
-                charPoses={charPoses}
-                withParent={false}
-              >
-                {this.state.text}
-              </StyledTitle>
-            ) : (
-              <StyledTitle
-                key={'splittext' + this.state.text + this.state.isFirst}
-                onPoseComplete={() => this.FireMe()}
-                initialPose="middle"
-                pose="last"
-                charPoses={charPosesLater}
-                withParent={false}
-              >
-                {this.state.text}
-              </StyledTitle>
-            )}
-          </div>
-        ) : null}
-      </div>
-    )
-  }
-}
+const Title = styled(PosedTitle)`
+  font-family: ${theme.fontTitle};
+  color: #fff;
+  font-size: 48px;
+  font-weight: normal;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: 1.25;
+  letter-spacing: 2.4px;
+  text-align: left;
+`
 
 export default Title

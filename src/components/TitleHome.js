@@ -9,7 +9,6 @@ const StyledTitle = styled(SplitText)`
       font-size: 36px;
       font-weight: normal;
       font-style: normal;
-      line-height: 1;
       color: #ffffff;
       margin: 0;
       margin-left: -5px;

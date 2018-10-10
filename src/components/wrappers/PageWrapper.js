@@ -59,7 +59,6 @@ class PageWrapper extends Component {
                       background-color: ${theme.bodyBg};
                       margin: 0;
                       padding: 0;
-                      overflow: hidden
                   }
               `}</style>
             </Helmet>
