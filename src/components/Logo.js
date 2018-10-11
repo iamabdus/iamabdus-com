@@ -10,9 +10,15 @@ const StyledLogo = styled.div`
     width: 34px;
   }
 `
-const Logo = () => (
+const Logo = (props) => (
   <StyledLogo>
-    <Link to="/">
+    <Link
+      to="/"
+      onClick={e => {
+        e.preventDefault()
+        props.startPageChangingHandler('/')
+      }}
+    >
       <LogoSvg />
     </Link>
   </StyledLogo>

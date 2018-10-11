@@ -1,7 +1,23 @@
-/**
- * Implement Gatsby's Browser APIs in this file.
- *
- * See: https://www.gatsbyjs.org/docs/browser-apis/
- */
+import React from 'react'
+import PageWrapper from './src/components/wrappers/PageWrapper';
 
-// You can delete this file if you're not using it
+let isFirstLoad
+
+const onClientEntry = () => {
+  console.log("I've started!")
+  isFirstLoad = true
+}
+
+const onRouteUpdate = ({ location }) => {
+  isFirstLoad = false
+}
+
+const wrapPageElement = ({ element, props }) => {
+  return (
+    <PageWrapper {...props} isFirstLoad={isFirstLoad}>
+      {element}
+    </PageWrapper>
+  )
+}
+
+export { onClientEntry, onRouteUpdate, wrapPageElement }

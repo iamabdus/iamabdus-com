@@ -2,15 +2,24 @@ import React, { Component } from 'react'
 import styled from 'styled-components'
 import posed from 'react-pose'
 import media from './utility/media'
-import Logo from './logo'
-import SideMenu from './sidemenu'
-import SidebarSocial from './sidebar-social'
+import Logo from './Logo'
+import SideMenu from './Sidemenu'
+import SidebarSocial from './SidebarSocial'
 
 // const MyComponent = ({ hostRef }) => <div ref={hostRef}></div>
 
 const PosedSidebar = posed.div({
-  hidden: { opacity: 0, scale: 0.99 },
-  visible: { opacity: 1, scale: 1, delay: 900 },
+  hidden: { opacity: 0, x: -25 },
+  visible: {
+    opacity: 1,
+    x: 0,
+    transition: ({ timingOffset }) => {
+      return {
+        ease: 'easeOut',
+        delay: timingOffset + 50,
+      }
+    },
+  },
 })
 
 const StyledSidebar = styled(PosedSidebar)`
@@ -38,24 +47,19 @@ class Sidebar extends Component {
   }
 
   render() {
-    const { visitedFirst } = this.props
-    if (visitedFirst) {
-      return (
-        <StyledSidebar pose={this.state.pose}>
-          <Logo />
-          <SideMenu />
-          <SidebarSocial />
-        </StyledSidebar>
-      )
-    } else {
-      return (
-        <StyledSidebar pose="visible">
-          <Logo />
-          <SideMenu />
-          <SidebarSocial />
-        </StyledSidebar>
-      )
-    }
+    const { isFirstLoad, timingOffset, ...rest } = this.props
+
+    return (
+      <StyledSidebar
+        timingOffset={timingOffset}
+        initialPose={isFirstLoad ? 'hidden' : 'visible'}
+        pose="visible"
+      >
+        <Logo {...rest} />
+        <SideMenu {...rest} />
+        <SidebarSocial />
+      </StyledSidebar>
+    )
   }
 }
 
