@@ -59,12 +59,12 @@ const NavLink = styled(Link)`
 }
 `
 
-const  NavButton  = ({ path, text, onClickHandler }) => (<NavItem>
+const  NavButton  = ({ path, text, onClick }) => (<NavItem>
         <NavLink
           to={path}
           onClick={e => {
             e.preventDefault()
-            onClickHandler(path)
+            onClick(path)
           }}
         >
           {text}
