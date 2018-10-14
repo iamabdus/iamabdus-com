@@ -76,7 +76,7 @@ const LinkItem = styled.a`
   ${StyledSideMenu}:hover & {
     visibility: visible;
     opacity: 1;
-    @media (max-width: ${media.sm}) {
+    @media (max-width: ${media.md}) {
       visibility: 'hidden';
       opacity: 0;
     }
@@ -114,7 +114,7 @@ class SideMenu extends Component {
       document.documentElement.clientWidth,
       window.innerWidth || 0
     )
-    if (width <= 576) {
+    if (width <= 768) {
       this.setState({ isMobileMenuClickable: true })
     }
   }
