@@ -124,7 +124,7 @@ class Portfolio extends Component {
           </Title>
         </StyledHeader>
         <PortfolioContainer initialPose="exit" pose="enter">
-          <Fade>
+          <Fade left distance="25px">
             <PortfolioItem>
               <PortfolioText>
                 <PortfolioSerial>01</PortfolioSerial>
@@ -139,7 +139,7 @@ class Portfolio extends Component {
             </PortfolioItem>
           </Fade>
 
-          <Fade>
+          <Fade left distance="25px">
             <PortfolioItemEven>
               <PortfolioText>
                 <PortfolioSerial>02</PortfolioSerial>
@@ -153,7 +153,7 @@ class Portfolio extends Component {
               </PortfolioImage>
             </PortfolioItemEven>
           </Fade>
-          <Fade>
+          <Fade left distance="25px">
             <PortfolioItem>
               <PortfolioText>
                 <PortfolioSerial>01</PortfolioSerial>
@@ -168,7 +168,7 @@ class Portfolio extends Component {
             </PortfolioItem>
           </Fade>
 
-          <Fade>
+          <Fade left distance="25px">
             <PortfolioItemEven>
               <PortfolioText>
                 <PortfolioSerial>02</PortfolioSerial>
@@ -182,7 +182,7 @@ class Portfolio extends Component {
               </PortfolioImage>
             </PortfolioItemEven>
           </Fade>
-          <Fade>
+          <Fade left distance="25px">
             <PortfolioItem>
               <PortfolioText>
                 <PortfolioSerial>01</PortfolioSerial>
@@ -197,7 +197,7 @@ class Portfolio extends Component {
             </PortfolioItem>
           </Fade>
 
-          <Fade>
+          <Fade left distance="25px">
             <PortfolioItemEven>
               <PortfolioText>
                 <PortfolioSerial>02</PortfolioSerial>
