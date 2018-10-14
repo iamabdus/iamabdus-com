@@ -69,6 +69,10 @@ const LinkItem = styled.a`
     height: 25px;
   }
 
+  &:hover {
+    color: #fff;
+  }
+
   ${StyledSideMenu}:hover & {
     visibility: visible;
     opacity: 1;
