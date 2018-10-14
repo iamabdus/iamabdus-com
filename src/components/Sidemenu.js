@@ -125,13 +125,15 @@ class SideMenu extends Component {
 
   clicked = (e, nextPageLocation, currentPageLocation) => {
     e.preventDefault()
-    if (nextPageLocation === currentPageLocation) return
 
-    //Small screen call clickedMobile and return
+    // For small screen call clickedMobile 
     if (this.state.isMobileMenuClickable) {
       this.clickedMobile(nextPageLocation, currentPageLocation)
       return
     }
+
+    //Not mobile
+    if (nextPageLocation === currentPageLocation) return
 
     //Pass handller back to Layout.js for page transition function
     this.props.startPageChangingHandler(nextPageLocation)
@@ -143,9 +145,9 @@ class SideMenu extends Component {
   }
 
   clickedMobile = (nextPageLocation, currentPageLocation) => {
-    if (nextPageLocation === currentPageLocation) return
 
     if (this.state.showMobileMenu) {
+      if (nextPageLocation === currentPageLocation) return
       //Pass handller back to Layout.js for page transition function
       this.props.startPageChangingHandler(nextPageLocation)
 
@@ -172,7 +174,7 @@ class SideMenu extends Component {
   }
 
   render() {
-    const { hover, isMobileMenuClickable, showMobileMenu } = this.state
+    const { hover, showMobileMenu } = this.state
     const { currentPagePath } = this.props
     return (
       <Location>
@@ -186,7 +188,6 @@ class SideMenu extends Component {
                 pointerEvents: hover ? 'auto' : 'none',
                 overflow: showMobileMenu ? 'initial' : null,
               }}
-              onClick={isMobileMenuClickable ? this.toggleMobileMenu : null}
             >
               {menuItems.map(({ path, text }) => (
                 <ListItem key={path}>
