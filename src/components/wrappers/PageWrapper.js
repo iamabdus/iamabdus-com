@@ -4,6 +4,8 @@ import { StaticQuery, graphql } from 'gatsby'
 import Layout from './Layout'
 import theme from '../utility/theme'
 import baseStyles from '../utility/basestyle'
+import 'react-perfect-scrollbar/dist/css/styles.css'
+import PerfectScrollbar from 'react-perfect-scrollbar'
 
 //timingOffset for initial sidebar transition duration
 const timingOffset = 500
@@ -66,9 +68,11 @@ class PageWrapper extends Component {
             {baseStyles()}
 
             {loadPage ? (
-              <Layout {...rest} timingOffset={timingOffset}>
-                {children}
-              </Layout>
+              <PerfectScrollbar>
+                <Layout {...rest} timingOffset={timingOffset}>
+                  {children}
+                </Layout>
+              </PerfectScrollbar>
             ) : null}
           </>
         )}
