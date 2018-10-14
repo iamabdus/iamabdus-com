@@ -76,11 +76,6 @@ const LinkItem = styled(Link)`
   }
 `
 
-//Hidden link after click ti page navigate
-const hiddenLink = {
-  opacity: 0,
-  visibility: 'hidden',
-}
 
 const menuItems = [
   {

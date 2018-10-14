@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import styled from 'styled-components'
 import posed from 'react-pose'
 import Fade from 'react-reveal/Fade'
-import media from '../components/utility/media'
 import theme from '../components/utility/theme'
 import Tagline from '../components/Tagline'
 import Title from '../components/Title'
@@ -41,15 +40,6 @@ const PortfolioContainer = styled(PosedPortfolioContainer)`
   margin-top: 100px;
 `
 
-// const PortfolioItem = ({ isEven }) => {
-//   return styled.div`
-//     height: 400px;
-//     display: flex;
-//     flex-direction: ${isEven ? 'row-reverse' : 'row'};
-//     align-items: center;
-//     margin-bottom: 50px;
-//   `
-// }
 
 const PortfolioItem = styled.div`
   height: 400px;
@@ -125,7 +115,7 @@ const SinglePortfolio = ({ serial, title, desc, imgSrc }) => {
           <PortfolioDescription>{desc}</PortfolioDescription>
         </PortfolioText>
         <PortfolioImage>
-          <img src={imgSrc} />
+          <img src={imgSrc} alt={title}/>
         </PortfolioImage>
       </PortfolioItem>
     </Fade>
@@ -190,7 +180,7 @@ class Portfolio extends Component {
               imgSrc: portfolio.imgSrc,
             }
 
-            return <SinglePortfolio key={index} {...portfolioObj} />
+            return <SinglePortfolio key={index} {...portfolioObj} {...rest} />
           })}
         </PortfolioContainer>
       </Container>
