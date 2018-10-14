@@ -103,7 +103,7 @@ const menuItems = [
 
 class SideMenu extends Component {
   state = {
-    hideLink: false,
+    hover: true,
   }
 
   clicked = (e, nextPageLocation, currentPageLocation) => {
@@ -113,9 +113,9 @@ class SideMenu extends Component {
     //Pass handller back to Layout.js for page transition function
     this.props.startPageChangingHandler(nextPageLocation)
 
-    this.setState({ hideLink: true})
+    this.setState({ hover: false })
     this.timerHideLink = setTimeout(() => {
-      this.setState({ hideLink: false })
+      this.setState({ hover: true })
     }, 1000)
   }
 
@@ -124,7 +124,7 @@ class SideMenu extends Component {
   }
 
   render() {
-    const { hideLink } = this.state
+    const { hover } = this.state
     const { currentPagePath } = this.props
     return (
       <Location>
@@ -133,12 +133,17 @@ class SideMenu extends Component {
           const currentPageLocation = currentPagePath || location.pathname
 
           return (
-            <StyledSideMenu>
+            <StyledSideMenu
+              style={
+                hover ? { pointerEvents: 'auto' } : { pointerEvents: 'none' }
+              }
+            >
               {menuItems.map(({ path, text }) => (
                 <ListItem key={path}>
-                  <BarItem className={currentPageLocation === path ? 'active' : null} />
+                  <BarItem
+                    className={currentPageLocation === path ? 'active' : null}
+                  />
                   <LinkItem
-                    style={hideLink ? hiddenLink : null}
                     to={path}
                     onClick={e => this.clicked(e, path, currentPageLocation)}
                   >
