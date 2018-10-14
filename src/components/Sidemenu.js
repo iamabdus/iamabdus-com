@@ -106,7 +106,6 @@ class SideMenu extends Component {
   state = {
     hover: true,
     isMobileMenuClickable: false,
-    showMobileMenu: false,
   }
 
   componentDidMount() {
@@ -119,14 +118,10 @@ class SideMenu extends Component {
     }
   }
 
-  toggleMobileMenu = () => {
-    this.setState({ showMobileMenu: !this.state.showMobileMenu })
-  }
-
   clicked = (e, nextPageLocation, currentPageLocation) => {
     e.preventDefault()
 
-    // For small screen call clickedMobile 
+    // For small screen call clickedMobile
     if (this.state.isMobileMenuClickable) {
       this.clickedMobile(nextPageLocation, currentPageLocation)
       return
@@ -145,8 +140,7 @@ class SideMenu extends Component {
   }
 
   clickedMobile = (nextPageLocation, currentPageLocation) => {
-
-    if (this.state.showMobileMenu) {
+    if (this.props.showMobileMenu) {
       if (nextPageLocation === currentPageLocation) return
       //Pass handller back to Layout.js for page transition function
       this.props.startPageChangingHandler(nextPageLocation)
@@ -156,16 +150,9 @@ class SideMenu extends Component {
         this.setState({ hover: true })
       }, 1000)
 
-      //Activate overlay
-      this.props.toggleOverlayHandler()
-
-      //Prepare for next open
-      this.toggleMobileMenu()
+      this.props.toggleMobileMenuHandler()
     } else {
-      //If opened lets close
-      this.toggleMobileMenu()
-      //close overlay
-      this.props.toggleOverlayHandler()
+      this.props.toggleMobileMenuHandler()
     }
   }
 
@@ -174,8 +161,8 @@ class SideMenu extends Component {
   }
 
   render() {
-    const { hover, showMobileMenu } = this.state
-    const { currentPagePath } = this.props
+    const { hover } = this.state
+    const { currentPagePath, showMobileMenu } = this.props
     return (
       <Location>
         {({ location }) => {

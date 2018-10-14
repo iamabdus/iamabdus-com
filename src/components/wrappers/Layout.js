@@ -134,6 +134,7 @@ class Layout extends Component {
     contentLoader: false,
     currentPagePath: null,
     overlay: false,
+    showMobileMenu: false,
   }
 
   /**
@@ -165,9 +166,10 @@ class Layout extends Component {
     })
   }
 
-  toggleOverlay = () => {
+  toggleMobileMenu = () => {
     this.setState(state => {
       return {
+        showMobileMenu: !state.showMobileMenu,
         overlay: !state.overlay,
       }
     })
@@ -179,7 +181,7 @@ class Layout extends Component {
 
   render() {
     const { children, isFirstLoad, timingOffset, ...rest } = this.props
-    const { pageChanging, contentLoader, currentPagePath, overlay } = this.state
+    const { pageChanging, contentLoader, currentPagePath, overlay, showMobileMenu } = this.state
 
     const pageChildren = React.cloneElement(children, {
       isFirstLoad: isFirstLoad,
@@ -196,7 +198,7 @@ class Layout extends Component {
             pose="enter"
           />
         ) : null}
-        {overlay ? <Overlay /> : null}
+        {overlay ? <Overlay onClick={this.toggleMobileMenu} /> : null}
         <LayoutInner>
           <LayoutSidenav
             timingOffset={timingOffset}
@@ -208,7 +210,8 @@ class Layout extends Component {
               timingOffset={timingOffset}
               currentPagePath={currentPagePath}
               startPageChangingHandler={this.startPageChanging}
-              toggleOverlayHandler={this.toggleOverlay}
+              toggleMobileMenuHandler={this.toggleMobileMenu}
+              showMobileMenu= {showMobileMenu}
               {...rest}
             />
           </LayoutSidenav>
