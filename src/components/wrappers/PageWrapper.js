@@ -51,7 +51,7 @@ class PageWrapper extends Component {
             >
               <html lang="en" />
               <link
-                href="https://fonts.googleapis.com/css?family=Abril+Fatface|Montserrat:400,500"
+                href="https://fonts.googleapis.com/css?family=Abril+Fatface|Montserrat:300,400,500,700"
                 rel="stylesheet"
               />
               <style type="text/css">{`
