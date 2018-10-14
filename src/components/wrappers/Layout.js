@@ -181,7 +181,13 @@ class Layout extends Component {
 
   render() {
     const { children, isFirstLoad, timingOffset, ...rest } = this.props
-    const { pageChanging, contentLoader, currentPagePath, overlay, showMobileMenu } = this.state
+    const {
+      pageChanging,
+      contentLoader,
+      currentPagePath,
+      overlay,
+      showMobileMenu,
+    } = this.state
 
     const pageChildren = React.cloneElement(children, {
       isFirstLoad: isFirstLoad,
@@ -211,7 +217,7 @@ class Layout extends Component {
               currentPagePath={currentPagePath}
               startPageChangingHandler={this.startPageChanging}
               toggleMobileMenuHandler={this.toggleMobileMenu}
-              showMobileMenu= {showMobileMenu}
+              showMobileMenu={showMobileMenu}
               {...rest}
             />
           </LayoutSidenav>
