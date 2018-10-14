@@ -15,9 +15,6 @@ const Overlay = styled.div`
   z-index: 1;
   opacity: 0.9;
   background-color: ${theme.bodyBg};
-  @media (min-width: ${media.md}) {
-    display: none;
-  }
 `
 const LayoutInner = styled.div`
   width: 100%;
@@ -136,6 +133,7 @@ class Layout extends Component {
     pageChanging: false,
     contentLoader: false,
     currentPagePath: null,
+    overlay: false,
   }
 
   /**
@@ -167,13 +165,21 @@ class Layout extends Component {
     })
   }
 
+  toggleOverlay = () => {
+    this.setState(state => {
+      return {
+        overlay: !state.overlay,
+      }
+    })
+  }
+
   componentWillUnmount() {
     clearTimeout(this.timerContentLoader)
   }
 
   render() {
     const { children, isFirstLoad, timingOffset, ...rest } = this.props
-    const { pageChanging, contentLoader, currentPagePath } = this.state
+    const { pageChanging, contentLoader, currentPagePath, overlay } = this.state
 
     const pageChildren = React.cloneElement(children, {
       isFirstLoad: isFirstLoad,
@@ -190,7 +196,7 @@ class Layout extends Component {
             pose="enter"
           />
         ) : null}
-        <Overlay />
+        {overlay ? <Overlay /> : null}
         <LayoutInner>
           <LayoutSidenav
             timingOffset={timingOffset}
@@ -202,6 +208,7 @@ class Layout extends Component {
               timingOffset={timingOffset}
               currentPagePath={currentPagePath}
               startPageChangingHandler={this.startPageChanging}
+              toggleOverlayHandler={this.toggleOverlay}
               {...rest}
             />
           </LayoutSidenav>

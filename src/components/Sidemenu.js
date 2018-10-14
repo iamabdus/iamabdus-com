@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import styled from 'styled-components'
 import theme from './utility/theme'
 import media from './utility/media'
-import { Link } from 'gatsby'
 import { Location } from '@reach/router'
 
 const StyledSideMenu = styled.ul`
@@ -43,7 +42,7 @@ const BarItem = styled.span`
   }
 `
 
-const LinkItem = styled(Link)`
+const LinkItem = styled.a`
   font-size: 12px;
   text-decoration: none;
   letter-spacing: 2px;
@@ -73,9 +72,12 @@ const LinkItem = styled(Link)`
   ${StyledSideMenu}:hover & {
     visibility: visible;
     opacity: 1;
+    @media (max-width: ${media.sm}) {
+      visibility: 'hidden';
+      opacity: 0;
+    }
   }
 `
-
 
 const menuItems = [
   {
@@ -99,11 +101,33 @@ const menuItems = [
 class SideMenu extends Component {
   state = {
     hover: true,
+    isMobileMenuClickable: false,
+    showMobileMenu: false,
+  }
+
+  componentDidMount() {
+    var width = Math.max(
+      document.documentElement.clientWidth,
+      window.innerWidth || 0
+    )
+    if (width <= 576) {
+      this.setState({ isMobileMenuClickable: true })
+    }
+  }
+
+  toggleMobileMenu = () => {
+    this.setState({ showMobileMenu: !this.state.showMobileMenu })
   }
 
   clicked = (e, nextPageLocation, currentPageLocation) => {
     e.preventDefault()
     if (nextPageLocation === currentPageLocation) return
+
+    //Small screen call clickedMobile and return
+    if (this.state.isMobileMenuClickable) {
+      this.clickedMobile(nextPageLocation, currentPageLocation)
+      return
+    }
 
     //Pass handller back to Layout.js for page transition function
     this.props.startPageChangingHandler(nextPageLocation)
@@ -114,12 +138,37 @@ class SideMenu extends Component {
     }, 1000)
   }
 
+  clickedMobile = (nextPageLocation, currentPageLocation) => {
+    if (nextPageLocation === currentPageLocation) return
+
+    if (this.state.showMobileMenu) {
+      //Pass handller back to Layout.js for page transition function
+      this.props.startPageChangingHandler(nextPageLocation)
+
+      this.setState({ hover: false })
+      this.timerHideLink = setTimeout(() => {
+        this.setState({ hover: true })
+      }, 1000)
+
+      //Activate overlay
+      this.props.toggleOverlayHandler()
+
+      //Prepare for next open
+      this.toggleMobileMenu()
+    } else {
+      //If opened lets close
+      this.toggleMobileMenu()
+      //close overlay
+      this.props.toggleOverlayHandler()
+    }
+  }
+
   componentWillUnmount() {
     clearTimeout(this.timerHideLink)
   }
 
   render() {
-    const { hover } = this.state
+    const { hover, isMobileMenuClickable, showMobileMenu } = this.state
     const { currentPagePath } = this.props
     return (
       <Location>
@@ -129,9 +178,11 @@ class SideMenu extends Component {
 
           return (
             <StyledSideMenu
-              style={
-                hover ? { pointerEvents: 'auto' } : { pointerEvents: 'none' }
-              }
+              style={{
+                pointerEvents: hover ? 'auto' : 'none',
+                overflow: showMobileMenu ? 'initial' : null,
+              }}
+              onClick={isMobileMenuClickable ? this.toggleMobileMenu : null}
             >
               {menuItems.map(({ path, text }) => (
                 <ListItem key={path}>
@@ -139,7 +190,15 @@ class SideMenu extends Component {
                     className={currentPageLocation === path ? 'active' : null}
                   />
                   <LinkItem
-                    to={path}
+                    href={path}
+                    style={
+                      showMobileMenu
+                        ? {
+                            visibility: 'visible',
+                            opacity: 1,
+                          }
+                        : null
+                    }
                     onClick={e => this.clicked(e, path, currentPageLocation)}
                   >
                     {text}

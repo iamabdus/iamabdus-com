@@ -44,7 +44,7 @@ const PortfolioContainer = styled(PosedPortfolioContainer)`
 const PortfolioItem = styled.div`
   height: 400px;
   display: flex;
-  flex-direction: ${props => props.isEven ? 'row-reverse' : 'row'};;
+  flex-direction: ${props => props.isEven ? 'row-reverse' : 'row'};
   align-items: center;
   margin-bottom: 50px;
 `
