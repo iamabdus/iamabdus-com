@@ -41,17 +41,20 @@ const PortfolioContainer = styled(PosedPortfolioContainer)`
   margin-top: 100px;
 `
 
+// const PortfolioItem = ({ isEven }) => {
+//   return styled.div`
+//     height: 400px;
+//     display: flex;
+//     flex-direction: ${isEven ? 'row-reverse' : 'row'};
+//     align-items: center;
+//     margin-bottom: 50px;
+//   `
+// }
+
 const PortfolioItem = styled.div`
   height: 400px;
   display: flex;
-  flex-direction: row;
-  align-items: center;
-  margin-bottom: 50px;
-`
-const PortfolioItemEven = styled.div`
-  height: 400px;
-  display: flex;
-  flex-direction: row-reverse;
+  flex-direction: ${props => props.isEven ? 'row-reverse' : 'row'};;
   align-items: center;
   margin-bottom: 50px;
 `
@@ -110,6 +113,61 @@ const PortfolioDescription = styled.div`
   color: ${theme.secondary};
 `
 
+const SinglePortfolio = ({ serial, title, desc, imgSrc }) => {
+  return (
+    <Fade left distance="25px">
+      <PortfolioItem isEven={serial % 2 === 0}>
+        <PortfolioText>
+          <PortfolioSerial>
+            {serial <= 9 ? `0${serial}` : serial}
+          </PortfolioSerial>
+          <PortfolioTitle>{title}</PortfolioTitle>
+          <PortfolioDescription>{desc}</PortfolioDescription>
+        </PortfolioText>
+        <PortfolioImage>
+          <img src={imgSrc} />
+        </PortfolioImage>
+      </PortfolioItem>
+    </Fade>
+  )
+}
+
+const protfolios = [
+  {
+    title: 'Sleek Dashboard',
+    desc: 'An open source dashboard template built on Bootstrap 4',
+    imgSrc: ImgIpad,
+  },
+
+  {
+    title: 'Angel WP',
+    desc: 'An open source Wordpress template built on Bootstrap 3',
+    imgSrc: Imglaptop,
+  },
+  {
+    title: 'Sleek Dashboard',
+    desc: 'An open source dashboard template built on Bootstrap 4',
+    imgSrc: ImgIpad,
+  },
+
+  {
+    title: 'Angel WP',
+    desc: 'An open source Wordpress template built on Bootstrap 3',
+    imgSrc: Imglaptop,
+  },
+  {
+    title: 'Sleek Dashboard',
+    desc: 'An open source dashboard template built on Bootstrap 4',
+    imgSrc: ImgIpad,
+  },
+
+  {
+    title: 'Angel WP',
+    desc: 'An open source Wordpress template built on Bootstrap 3',
+    imgSrc: Imglaptop,
+  },
+]
+
 class Portfolio extends Component {
   render() {
     const { isFirstLoad, timingOffset, ...rest } = this.props
@@ -124,93 +182,16 @@ class Portfolio extends Component {
           </Title>
         </StyledHeader>
         <PortfolioContainer initialPose="exit" pose="enter">
-          <Fade left distance="25px">
-            <PortfolioItem>
-              <PortfolioText>
-                <PortfolioSerial>01</PortfolioSerial>
-                <PortfolioTitle>Sleek Dashboard</PortfolioTitle>
-                <PortfolioDescription>
-                  An open source dashboard template built on Bootstrap 4.
-                </PortfolioDescription>
-              </PortfolioText>
-              <PortfolioImage>
-                <img src={ImgIpad} />
-              </PortfolioImage>
-            </PortfolioItem>
-          </Fade>
+          {protfolios.map((portfolio, index) => {
+            const portfolioObj = {
+              serial: index + 1,
+              title: portfolio.title,
+              desc: portfolio.desc,
+              imgSrc: portfolio.imgSrc,
+            }
 
-          <Fade left distance="25px">
-            <PortfolioItemEven>
-              <PortfolioText>
-                <PortfolioSerial>02</PortfolioSerial>
-                <PortfolioTitle>Angel WP</PortfolioTitle>
-                <PortfolioDescription>
-                  An open source wordpress template built on Bootstrap 4.
-                </PortfolioDescription>
-              </PortfolioText>
-              <PortfolioImage>
-                <img src={Imglaptop} />
-              </PortfolioImage>
-            </PortfolioItemEven>
-          </Fade>
-          <Fade left distance="25px">
-            <PortfolioItem>
-              <PortfolioText>
-                <PortfolioSerial>01</PortfolioSerial>
-                <PortfolioTitle>Sleek Dashboard</PortfolioTitle>
-                <PortfolioDescription>
-                  An open source dashboard template built on Bootstrap 4.
-                </PortfolioDescription>
-              </PortfolioText>
-              <PortfolioImage>
-                <img src={ImgIpad} />
-              </PortfolioImage>
-            </PortfolioItem>
-          </Fade>
-
-          <Fade left distance="25px">
-            <PortfolioItemEven>
-              <PortfolioText>
-                <PortfolioSerial>02</PortfolioSerial>
-                <PortfolioTitle>Angel WP</PortfolioTitle>
-                <PortfolioDescription>
-                  An open source wordpress template built on Bootstrap 4.
-                </PortfolioDescription>
-              </PortfolioText>
-              <PortfolioImage>
-                <img src={Imglaptop} />
-              </PortfolioImage>
-            </PortfolioItemEven>
-          </Fade>
-          <Fade left distance="25px">
-            <PortfolioItem>
-              <PortfolioText>
-                <PortfolioSerial>01</PortfolioSerial>
-                <PortfolioTitle>Sleek Dashboard</PortfolioTitle>
-                <PortfolioDescription>
-                  An open source dashboard template built on Bootstrap 4.
-                </PortfolioDescription>
-              </PortfolioText>
-              <PortfolioImage>
-                <img src={ImgIpad} />
-              </PortfolioImage>
-            </PortfolioItem>
-          </Fade>
-
-          <Fade left distance="25px">
-            <PortfolioItemEven>
-              <PortfolioText>
-                <PortfolioSerial>02</PortfolioSerial>
-                <PortfolioTitle>Angel WP</PortfolioTitle>
-                <PortfolioDescription>
-                  An open source wordpress template built on Bootstrap 4.
-                </PortfolioDescription>
-              </PortfolioText>
-              <PortfolioImage>
-                <img src={Imglaptop} />
-              </PortfolioImage>
-            </PortfolioItemEven>
-          </Fade>
+            return <SinglePortfolio key={index} {...portfolioObj} />
+          })}
         </PortfolioContainer>
       </Container>
     )
