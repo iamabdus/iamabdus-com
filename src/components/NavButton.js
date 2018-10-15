@@ -59,7 +59,7 @@ const NavLink = styled(Link)`
 }
 `
 
-const  NavButton  = ({ path, text, onClick }) => (<NavItem>
+const  NavButton  = ({ path, onClick, children }) => (<NavItem>
         <NavLink
           to={path}
           onClick={e => {
@@ -67,7 +67,7 @@ const  NavButton  = ({ path, text, onClick }) => (<NavItem>
             onClick(path)
           }}
         >
-          {text}
+          {children}
         </NavLink>
       </NavItem>)
    

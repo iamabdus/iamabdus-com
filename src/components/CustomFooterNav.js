@@ -33,11 +33,10 @@ class CustomFooterNav extends Component {
         {navItems.map((item, i) => {
           const obj = {
             path: item.path,
-            text: item.text,
             onClick: startPageChangingHandler
           }
 
-          return <NavButton key={i} {...obj} />
+          return <NavButton key={i} {...obj}>{item.text}</NavButton>
         })}
       </FooterNav>
     )
