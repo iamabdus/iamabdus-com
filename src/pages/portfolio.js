@@ -40,11 +40,10 @@ const PortfolioContainer = styled(PosedPortfolioContainer)`
   margin-top: 100px;
 `
 
-
 const PortfolioItem = styled.div`
   height: 400px;
   display: flex;
-  flex-direction: ${props => props.isEven ? 'row-reverse' : 'row'};
+  flex-direction: ${props => (props.isEven ? 'row-reverse' : 'row')};
   align-items: center;
   margin-bottom: 50px;
 `
@@ -115,7 +114,7 @@ const SinglePortfolio = ({ serial, title, desc, imgSrc }) => {
           <PortfolioDescription>{desc}</PortfolioDescription>
         </PortfolioText>
         <PortfolioImage>
-          <img src={imgSrc} alt={title}/>
+          <img src={imgSrc} alt={title} />
         </PortfolioImage>
       </PortfolioItem>
     </Fade>
