@@ -1,0 +1,41 @@
+[
+  {
+    "title": "Sleek Dashboard",
+    "desc": "An open source dashboard template built on Bootstrap 4",
+    "imgSrc": "../images/portfolio/ipad.png",
+    "linkDetails": "/"
+  },
+
+  {
+    "title": "Angel WP",
+    "desc": "An open source Wordpress template built on Bootstrap 3",
+    "imgSrc": "../images/portfolio/Laptop.png",
+    "linkDetails": "/"
+  },
+  {
+    "title": "Sleek Dashboard",
+    "desc": "An open source dashboard template built on Bootstrap 4",
+    "imgSrc": "../images/portfolio/ipad.png",
+    "linkDetails": "/"
+  },
+
+  {
+    "title": "Angel WP",
+    "desc": "An open source Wordpress template built on Bootstrap 3",
+    "imgSrc": "../images/portfolio/Laptop.png",
+    "linkDetails": "/"
+  },
+  {
+    "title": "Sleek Dashboard",
+    "desc": "An open source dashboard template built on Bootstrap 4",
+    "imgSrc": "../images/portfolio/ipad.png",
+    "linkDetails": "/"
+  },
+
+  {
+    "title": "Angel WP",
+    "desc": "An open source Wordpress template built on Bootstrap 3",
+    "imgSrc": "../images/portfolio/Laptop.png",
+    "linkDetails": "/"
+  }
+]

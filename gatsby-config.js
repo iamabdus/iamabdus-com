@@ -18,19 +18,10 @@ module.exports = {
       },
     },
     {
-      resolve: 'gatsby-source-wordpress',
+      resolve: `gatsby-source-contentful`,
       options: {
-        baseUrl: 'YOUR SITE URL',
-        protocol: 'https',
-        hostingWPCOM: true,
-        useACF: false,
-        auth: {
-          wpcom_app_clientSecret: 'CLIENT SECRET',
-          wpcom_app_clientId: 'CLIENT ID',
-          wpcom_user: 'USERNAME',
-          wpcom_pass: 'PASSWORD',
-        },
-        verboseOutput: false,
+        spaceId: `mfjs8tchxh1g`,
+        accessToken: `0c428a3f436ad539c6edfc286f853a2aa5391714974c8c24f5b31695899460ee`,
       },
     },
     'gatsby-plugin-offline',
