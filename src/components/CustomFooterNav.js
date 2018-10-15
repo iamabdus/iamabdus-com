@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
+import media from './utility/media'
 import NavButton from './NavButton'
 
 const FooterNav = styled.ul`
@@ -8,6 +9,17 @@ const FooterNav = styled.ul`
   list-style: none;
   display: flex;
   flex-wrap: wrap;
+`
+
+const NavItem = styled.li`
+  margin-right: 70px;
+  margin-bottom: 40px;
+  &:last-child {
+    margin-bottom: 0;
+  }
+  @media (min-width: ${media.md}) {
+    margin-bottom: 0;
+  }
 `
 
 const navItems = [
@@ -33,10 +45,14 @@ class CustomFooterNav extends Component {
         {navItems.map((item, i) => {
           const obj = {
             path: item.path,
-            onClick: startPageChangingHandler
+            onClick: startPageChangingHandler,
           }
 
-          return <NavButton key={i} {...obj}>{item.text}</NavButton>
+          return (
+            <NavItem key={i}>
+              <NavButton {...obj}>{item.text}</NavButton>
+            </NavItem>
+          )
         })}
       </FooterNav>
     )

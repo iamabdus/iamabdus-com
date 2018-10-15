@@ -4,16 +4,6 @@ import { Link } from 'gatsby'
 import theme from './utility/theme'
 import media from './utility/media'
 
-const NavItem = styled.li`
-  margin-right: 70px;
-  margin-bottom: 40px;
-  &:last-child {
-    margin-bottom: 0;
-  }
-  @media (min-width: ${media.md}) {
-    margin-bottom: 0;
-  }
-`
 
 const linkHover = keyframes`
     5%  {width: 100%; right:0; left: auto}
@@ -59,17 +49,16 @@ const NavLink = styled(Link)`
 }
 `
 
-const  NavButton  = ({ path, onClick, children }) => (<NavItem>
-        <NavLink
-          to={path}
-          onClick={e => {
-            e.preventDefault()
-            onClick(path)
-          }}
-        >
-          {children}
-        </NavLink>
-      </NavItem>)
-   
+const NavButton = ({ path, onClick, children }) => (
+  <NavLink
+    to={path}
+    onClick={e => {
+      e.preventDefault()
+      onClick(path)
+    }}
+  >
+    {children}
+  </NavLink>
+)
 
 export default NavButton

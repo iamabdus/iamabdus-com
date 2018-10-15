@@ -5,6 +5,7 @@ import Fade from 'react-reveal/Fade'
 import theme from '../components/utility/theme'
 import Tagline from '../components/Tagline'
 import Title from '../components/Title'
+import NavButton from '../components/NavButton'
 import ImgIpad from '../images/portfolio/ipad.png'
 import Imglaptop from '../images/portfolio/Laptop.png'
 
@@ -78,7 +79,7 @@ const PortfolioSerial = styled.div`
   line-height: 1;
   letter-spacing: 14px;
   color: #fff;
-  margin-bottom: 20px;
+  margin-bottom: 30px;
 `
 
 const PortfolioTitle = styled.div`
@@ -89,7 +90,7 @@ const PortfolioTitle = styled.div`
   line-height: 1.2;
   letter-spacing: 1.5px;
   color: #fff;
-  margin-bottom: 10px;
+  margin-bottom: 14px;
 `
 
 const PortfolioDescription = styled.div`
@@ -99,10 +100,11 @@ const PortfolioDescription = styled.div`
   font-stretch: normal;
   line-height: 1.71;
   letter-spacing: 2.8px;
+  margin-bottom: 24px;
   color: ${theme.secondary};
 `
 
-const SinglePortfolio = ({ serial, title, desc, imgSrc }) => {
+const SinglePortfolio = ({ serial, title, desc, imgSrc, linkDetails, startPageChangingHandler }) => {
   return (
     <Fade left distance="25px">
       <PortfolioItem isEven={serial % 2 === 0}>
@@ -112,6 +114,7 @@ const SinglePortfolio = ({ serial, title, desc, imgSrc }) => {
           </PortfolioSerial>
           <PortfolioTitle>{title}</PortfolioTitle>
           <PortfolioDescription>{desc}</PortfolioDescription>
+          <NavButton path={linkDetails} onClick={startPageChangingHandler}>View Details</NavButton>
         </PortfolioText>
         <PortfolioImage>
           <img src={imgSrc} alt={title} />
@@ -126,34 +129,40 @@ const protfolios = [
     title: 'Sleek Dashboard',
     desc: 'An open source dashboard template built on Bootstrap 4',
     imgSrc: ImgIpad,
+    linkDetails: "/"
   },
 
   {
     title: 'Angel WP',
     desc: 'An open source Wordpress template built on Bootstrap 3',
     imgSrc: Imglaptop,
+    linkDetails: "/"
   },
   {
     title: 'Sleek Dashboard',
     desc: 'An open source dashboard template built on Bootstrap 4',
     imgSrc: ImgIpad,
+    linkDetails: "/"
   },
 
   {
     title: 'Angel WP',
     desc: 'An open source Wordpress template built on Bootstrap 3',
     imgSrc: Imglaptop,
+    linkDetails: "/"
   },
   {
     title: 'Sleek Dashboard',
     desc: 'An open source dashboard template built on Bootstrap 4',
     imgSrc: ImgIpad,
+    linkDetails: "/"
   },
 
   {
     title: 'Angel WP',
     desc: 'An open source Wordpress template built on Bootstrap 3',
     imgSrc: Imglaptop,
+    linkDetails: "/"
   },
 ]
 
@@ -177,6 +186,7 @@ class Portfolio extends Component {
               title: portfolio.title,
               desc: portfolio.desc,
               imgSrc: portfolio.imgSrc,
+              linkDetails: portfolio.linkDetails
             }
 
             return <SinglePortfolio key={index} {...portfolioObj} {...rest} />
