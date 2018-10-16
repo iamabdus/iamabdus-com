@@ -5,6 +5,7 @@ const theme = {
   fontFamily: 'Montserrat, sans-serif',
   fontTitle: '"Abril Fatface", cursive',
   bodyBg: '#292c39',
+  inputBorderColor: '#383c4f',
 }
 
 export default theme
