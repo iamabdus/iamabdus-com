@@ -8,7 +8,7 @@ const InputContainer = styled.div`
   margin-bottom: 100px;
 `
 
-const StyledInput = styled.input`
+const StyledTextArea = styled.textarea`
   width: 100%;
   font-size: 30px;
   font-weight: normal;
@@ -44,17 +44,17 @@ const labelStyle = {
   visibility: 'visible',
 }
 
-const Input = props => {
-  const { name, type, placeholder, value, handleChange, width = 50 } = props
+
+const TextArea = props => {
+  const { name, placeholder, value, handleChange, width = 50 } = props
   return (
     <InputContainer width={width}>
-      <StyledInput
-        id={name}
+      <StyledTextArea
         name={name}
-        type={type}
-        placeholder={placeholder}
         value={value}
         onChange={handleChange}
+        placeholder={placeholder}
+        rows={2}
       />
       <StyledLabel htmlFor={name} style={value.length > 0 ? labelStyle : null}>
         {placeholder}
@@ -63,4 +63,4 @@ const Input = props => {
   )
 }
 
-export default Input
+export default TextArea
