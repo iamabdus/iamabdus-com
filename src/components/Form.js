@@ -80,7 +80,14 @@ class CustomForm extends Component {
       )
       .then(
         response => {
-          this.setState({ submitText: 'Successfully Sent' })
+          this.setState({
+            user: {
+              name: '',
+              email: '',
+              projectDetails: '',
+            },
+            submitText: 'Successfully Sent',
+          })
         },
         err => {
           this.setState({ submitText: 'Failed! Try Again' })
