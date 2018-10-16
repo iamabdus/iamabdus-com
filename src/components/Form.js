@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
+import * as emailjs from 'emailjs-com'
 import theme from '../components/utility/theme'
 import Input from '../components/Input'
 import TextArea from '../components/TextArea'
@@ -29,6 +30,7 @@ class CustomForm extends Component {
       email: '',
       projectDetails: '',
     },
+    submitText: 'Send to Abdus',
   }
   handleFullName = e => {
     let value = e.target.value.trim()
@@ -60,22 +62,50 @@ class CustomForm extends Component {
     }))
   }
 
+  sendMail = e => {
+    e.preventDefault()
+    this.setState({ submitText: 'Sending' })
+    const { name, email, projectDetails } = this.state.user
+    const template = {
+      reply_to: email,
+      from_name: name,
+      message_html: projectDetails,
+    }
+    emailjs
+      .send(
+        'gmail',
+        'template_eayL0uQ3',
+        template,
+        'user_77wMH3M35ZMRZmzP3kuYO'
+      )
+      .then(
+        response => {
+          this.setState({ submitText: 'Successfully Sent' })
+        },
+        err => {
+          this.setState({ submitText: 'Failed! Try Again' })
+          console.log('FAILED...Please Try again', err)
+        }
+      )
+  }
+
   render() {
     const { isFirstLoad, timingOffset, ...rest } = this.props
+    const { user, submitText } = this.state
     return (
       <Form>
         <InputsContainer>
           <Input
             type={'text'}
             name={'name'}
-            value={this.state.user.name}
+            value={user.name}
             placeholder={'Your Name'}
             handleChange={this.handleFullName}
           />
           <Input
             type={'email'}
             name={'email'}
-            value={this.state.user.email}
+            value={user.email}
             placeholder={'Your Email'}
             handleChange={this.handleEmail}
           />
@@ -84,7 +114,7 @@ class CustomForm extends Component {
         <InputsContainer>
           <TextArea
             name={'projectDetails'}
-            value={this.state.user.projectDetails}
+            value={user.projectDetails}
             placeholder={'Say something about project'}
             handleChange={this.handleProjectDetails}
             width={100}
@@ -92,7 +122,9 @@ class CustomForm extends Component {
         </InputsContainer>
 
         <InputsContainer>
-          <ButtonSubmit type="button">Send to Abdus</ButtonSubmit>
+          <ButtonSubmit type="button" onClick={this.sendMail}>
+            {submitText}
+          </ButtonSubmit>
         </InputsContainer>
       </Form>
     )

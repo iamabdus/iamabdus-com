@@ -152,7 +152,7 @@ class Layout extends Component {
       this.setState({
         contentLoader: true,
       })
-    }, 350)
+    }, 100)
   }
 
   /**
